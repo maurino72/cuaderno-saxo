@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuaderno de saxo tenor · lip-out y escalas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,800;1,7..72,400&display=swap" rel="stylesheet">
+<script src="abcjs-basic-min.js"></script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#94711F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Saxo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+:root{
+  --paper:#ECEFE8; --ink:#1D2422; --brass:#94711F; --steel:#365571; --rule:#C3C9BF; --card:#F5F7F2;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --paper:#161A19; --ink:#E4E8E1; --brass:#D2AE5A; --steel:#8EB1CF; --rule:#38403D; --card:#1E2422; }
+}
+:root[data-theme="dark"]{ --paper:#161A19; --ink:#E4E8E1; --brass:#D2AE5A; --steel:#8EB1CF; --rule:#38403D; --card:#1E2422; }
+html{ scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Literata", Georgia, "Times New Roman", serif; font-size:1.0625rem; line-height:1.6; }
+header.hero{ max-width:880px; margin:0 auto; padding:3rem 1.25rem 1.5rem; position:relative; }
+.staff{ position:absolute; left:1.25rem; right:1.25rem; top:3.4rem; height:72px; pointer-events:none;
+  background:repeating-linear-gradient(to bottom, var(--rule) 0 1px, transparent 1px 18px); opacity:.9; }
+h1{ position:relative; font-size:clamp(2rem, 6vw, 3.4rem); line-height:1.05; font-weight:800; margin:0 0 1rem; letter-spacing:-.01em; }
+h1 em{ font-weight:400; display:block; font-size:.55em; color:var(--steel); margin-top:.5rem; }
+.lede{ max-width:62ch; margin:0; }
+nav{ position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--paper); border-bottom:1px solid var(--rule); }
+nav div{ max-width:880px; margin:0 auto; padding:.6rem 1.25rem; display:flex; gap:1.25rem; overflow-x:auto; }
+nav a{ color:var(--ink); text-decoration:none; white-space:nowrap; padding:.2rem 0; border-bottom:2px solid transparent; }
+nav a:hover, nav a:focus-visible{ border-color:var(--brass); outline:none; }
+main{ max-width:880px; margin:0 auto; padding:0 1.25rem 4rem; }
+section{ padding-top:2.5rem; }
+h2{ font-size:1.7rem; margin:0 0 .5rem; font-weight:600; }
+h3{ font-size:1.15rem; margin:2rem 0 .3rem; font-weight:600; }
+p{ max-width:68ch; }
+.how{ color:var(--steel); font-style:italic; margin:.2rem 0 .6rem; }
+.sheet{ background:var(--card); border:1px solid var(--rule); border-radius:4px; padding:.5rem .5rem .25rem; color:var(--ink); overflow-x:auto; }
+.sheet svg{ max-width:100%; }
+ol.routine{ list-style:none; padding:0; margin:1rem 0; border-left:3px solid var(--brass); }
+ol.routine li{ padding:.55rem 0 .55rem 1rem; display:grid; grid-template-columns:5.5rem 1fr; gap:.75rem; border-bottom:1px solid var(--rule); }
+ol.routine li:last-child{ border-bottom:0; }
+.min{ font-variant-numeric:tabular-nums; color:var(--brass); font-weight:600; }
+.controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.75rem; margin:1rem 0; }
+label{ display:flex; flex-direction:column; font-size:.9rem; gap:.25rem; }
+select, input, button{ font:inherit; font-size:1rem; color:var(--ink); background:var(--card); border:1px solid var(--rule); border-radius:4px; padding:.45rem .5rem; }
+select:focus-visible, input:focus-visible, button:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+button{ cursor:pointer; }
+button.primary{ background:var(--brass); color:var(--paper); border-color:var(--brass); font-weight:600; }
+.bar{ display:flex; flex-wrap:wrap; align-items:center; gap:.75rem; margin:.75rem 0; }
+.bar input[type=range]{ flex:1 1 160px; padding:0; accent-color:var(--brass); }
+.beat{ width:14px; height:14px; border-radius:50%; border:2px solid var(--brass); }
+.beat.on{ background:var(--brass); }
+.log{ font-size:.95rem; }
+.log table{ border-collapse:collapse; width:100%; }
+.log td, .log th{ text-align:left; padding:.35rem .5rem; border-bottom:1px solid var(--rule); }
+.tablewrap{ overflow-x:auto; }
+.tuner{ background:var(--card); border:1px solid var(--rule); border-radius:6px; padding:1.25rem; display:grid; gap:1rem; }
+.t-note{ font-size:clamp(3.5rem,14vw,6rem); font-weight:800; line-height:1; text-align:center; font-variant-numeric:tabular-nums; }
+.t-note small{ font-size:.3em; font-weight:400; color:var(--steel); margin-left:.2em; }
+.t-sub{ text-align:center; color:var(--steel); font-variant-numeric:tabular-nums; }
+.t-meter{ position:relative; height:56px; border-bottom:2px solid var(--rule); }
+.t-meter .tick{ position:absolute; bottom:0; width:1px; background:var(--rule); }
+.t-meter .zone{ position:absolute; bottom:0; top:0; left:calc(50% - 5%); width:10%; background:color-mix(in srgb, var(--brass) 18%, transparent); border-radius:3px 3px 0 0; }
+.t-needle{ position:absolute; bottom:0; left:50%; width:3px; height:100%; margin-left:-1.5px; background:var(--ink); border-radius:2px; transition:left .08s linear; }
+.t-needle.ok{ background:#2E7D4F; }
+.t-scale{ display:flex; justify-content:space-between; font-size:.8rem; color:var(--steel); font-variant-numeric:tabular-nums; }
+.t-cents{ text-align:center; font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums; }
+.t-cents.ok{ color:#2E7D4F; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .t-needle.ok, :root:not([data-theme="light"]) .t-cents.ok{ color:#6FCF97; background-color:initial; } }
+footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--steel); font-size:.9rem; }
+@media (prefers-reduced-motion: reduce){ *{ transition:none!important; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="staff" aria-hidden="true"></div>
+  <h1>Cuaderno de saxo tenor<em>Embocadura lip-out, registro grave y escalas</em></h1>
+  <p class="lede">Todo está en altura escrita para tenor. Los ejercicios de embocadura van primero porque son los que más te van a cambiar el grave; las escalas y las tríadas se generan solas, hay secciones de afinación, articulación y bebop, y un drone para tocar encima para cualquier tonalidad, patrón y rango.</p>
+</header>
+<nav aria-label="Secciones"><div>
+  <a href="#rutina">Rutina de 60 min</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
+</div></nav>
+<main>
+<section id="rutina">
+  <h2>Rutina de 60 minutos</h2>
+  <p>Antes de empezar, calentá dos o tres minutos y chequeá que la boquilla esté en su marca del corcho (está explicado en “Boquilla y afinación”). Una vez por semana, reemplazá el bloque final por la tabla de afinación.</p>
+  <p>Mientras dure el cambio a lip-out, el bloque de sonido pesa más que el de técnica. Si en algún momento sentís el labio cansado o empezás a morder, pará dos minutos: tocar con la embocadura vencida refuerza justo lo que querés sacar.</p>
+  <ol class="routine">
+    <li><span class="min">0–5</span><span>Boquilla sola y boquilla con tudel. Nota estable y después bajarla un tono con la garganta y la lengua, nunca aflojando la mandíbula.</span></li>
+    <li><span class="min">5–15</span><span>Notas largas descendentes, de Sol hasta Sib grave, con el drone de fondo en la misma nota que tocás.</span></li>
+    <li><span class="min">15–25</span><span>Armónicos sobre las digitaciones graves y el ejercicio de igualar color.</span></li>
+    <li><span class="min">25–32</span><span>Octavas ligadas, saltos al grave y ataques suaves.</span></li>
+    <li><span class="min">32–42</span><span>Escalas o tríadas: una tonalidad por día, un patrón por semana, con metrónomo. Algunos días, bebop en lugar de escalas.</span></li>
+    <li><span class="min">42–52</span><span>Articulación: dos o tres patrones de la escala de Fa, con el drone en Fa para ver si la lengua te mueve la afinación.</span></li>
+    <li><span class="min">52–60</span><span>Un tema lento o una balada aplicando el sonido nuevo. Grabate y escuchá al día siguiente.</span></li>
+  </ol>
+</section>
+
+<section id="embocadura">
+  <h2>Embocadura y graves</h2>
+  <p>Con lip-out el labio inferior trabaja menos enrollado y con más carne en contacto con la caña, así que el grave se resiente si la columna de aire llega rápida y estrecha o si la mandíbula compensa apretando. La idea en todos los ejercicios es la misma: garganta abierta como diciendo “oh”, lengua baja, aire caliente y lento, y comisuras firmes sin presión de abajo hacia arriba.</p>
+
+  <h3>Notas largas descendentes</h3>
+  <p class="how">Negra = 60. Cada nota dura dos compases: crescendo en el primero, diminuendo en el segundo. Afinador a la vista; el grave tiende a subir de afinación cuando lo forzás.</p>
+  <div class="sheet" id="ex-largas"></div>
+
+  <h3>Armónicos sobre digitaciones graves</h3>
+  <p class="how">Digitás la nota grave todo el ejercicio y cambiás de armónico solo con la garganta y la posición de la lengua. Si para subir necesitás apretar, volvé al fundamental y empezá de nuevo. Este es el ejercicio que más arregla el grave.</p>
+  <div class="sheet" id="ex-armonicos"></div>
+
+  <h3>Armónico y nota real</h3>
+  <p class="how">Tocás el armónico y enseguida la misma nota con su digitación normal, intentando que suene igual de abierta. El armónico te enseña dónde tiene que estar tu garganta.</p>
+  <div class="sheet" id="ex-espejo"></div>
+
+  <h3>Octavas ligadas hacia abajo</h3>
+  <p class="how">Soltás la llave de octava sin mover nada de la boca. El final baja cromático al Sib: dedos del meñique bien cerca de las llaves y sin cortar el aire.</p>
+  <div class="sheet" id="ex-octavas"></div>
+
+  <h3>Saltos ligados al grave</h3>
+  <p class="how">El salto tiene que salir “por dentro”: la garganta se abre antes de que llegue la nota grave. Si la nota grave gorgotea o sale una octava arriba, el aire está entrando demasiado rápido.</p>
+  <div class="sheet" id="ex-saltos"></div>
+
+  <h3>Ataques suaves en el grave</h3>
+  <p class="how">Ataque con sílaba “du”, pianísimo, sin golpe de lengua. Si la nota no habla, no empujes más aire: revisá que no haya presión de mandíbula y que entre suficiente boquilla.</p>
+  <div class="sheet" id="ex-ataques"></div>
+</section>
+
+<section id="boquilla">
+  <h2>Boquilla y afinación</h2>
+  <p>Con una boquilla nueva cambian dos cosas a la vez: dónde va en el corcho y cómo responde cada nota. Por eso la afinación y el grave se mueven juntos durante unas semanas. Para todo esto vas a usar el drone de abajo y el afinador de este cuaderno (o uno del celular, como Soundcorset o Pano Tuner).</p>
+
+  <h3>Qué es un drone</h3>
+  <p>Es una nota que suena fija de fondo mientras tocás. Si tu nota está afinada con ella, las dos se funden en un solo sonido. Si está desafinada, escuchás una ondulación tipo “uaua-uaua”, que se llama batido. Cuanto más lenta la ondulación, más cerca estás. Es la forma de afinar de oído, y conviene entrenarla más que mirar la aguja del afinador.</p>
+
+  <h3>Ubicar la boquilla en el corcho</h3>
+  <ol class="routine">
+    <li><span class="min">Paso 1</span><span>Calentá el saxo unos minutos tocando cualquier cosa. En frío todo da bajo.</span></li>
+    <li><span class="min">Paso 2</span><span>Tocá Do escrito del registro medio contra el drone en Do medio (o mirá el afinador). Si tenés que bajar la nota para que se funda, sacá un poco la boquilla; si tenés que subirla, metela.</span></li>
+    <li><span class="min">Paso 3</span><span>Chequeá también Sol medio y Re grave, no solo una nota.</span></li>
+    <li><span class="min">Paso 4</span><span>Cuando encuentres el punto, marcalo con lápiz en el corcho para no buscarlo cada día.</span></li>
+  </ol>
+  <p class="how">Si con la boquilla en su lugar los graves siguen costando mucho, puede que la caña no combine con la boquilla nueva: probá media numeración más blanda.</p>
+
+  <h3>Notas largas y escalas con drone</h3>
+  <p class="how">Notas largas de 8 tiempos sobre la escala de Do escrita, primero en la octava media y después en la grave, con el drone en Do. Cada nota en piano, crescendo a forte y vuelta a piano, sin que se mueva la afinación. Después, escalas lentas (negra = 60), quedándote en cada nota hasta que no lata contra el drone. Las terceras y quintas sobre la nota del drone son las que más se notan. Cambiá la nota del drone cada pocos días para recorrer otras tonalidades.</p>
+
+  <h3>Tabla de afinación semanal</h3>
+  <p class="how">Una vez por semana, tocá cada nota de grave a agudo en mezzoforte, con la embocadura relajada, y anotá cuántos cents se desvía en el afinador (positivo si da alto, negativo si da bajo). Cada saxo y cada boquilla tienen sus notas altas y bajas; conocer las tuyas te dice dónde corregir, y comparando semanas vas a ver cómo se estabiliza.</p>
+  <div class="bar">
+    <label style="flex-direction:row;align-items:center;gap:.5rem">Fecha <input type="date" id="tt-date"></label>
+    <button id="tt-save" class="primary" type="button">Guardar semana</button>
+    <button id="tt-clear" type="button">Vaciar campos</button>
+    <span id="tt-msg" role="status"></span>
+  </div>
+  <div class="tablewrap log"><table><thead><tr><th>Nota escrita</th><th>Cents hoy</th><th>Semana anterior</th><th>Cambio</th></tr></thead><tbody id="tt-body"></tbody></table></div>
+  <p class="how">Las tablas quedan guardadas en este navegador. En verde las notas que se acercaron a cero respecto de la semana anterior.</p>
+</section>
+
+<section id="overtones">
+  <h2>Overtones</h2>
+  <p>Continuación de los armónicos de la sección de embocadura, en orden de dificultad. La regla es la misma en todos: la digitación no cambia y la nota se mueve solo con la garganta y la lengua. Nunca uses la llave de octava, no muerdas para subir y no aflojes la mandíbula para bajar. Si un armónico no sale, volvé al anterior y probá de nuevo, sin forzar. Con 10 minutos por día alcanza; más que eso cansa y empezás a apretar.</p>
+
+  <h3>1. Octava armónica</h3>
+  <p class="how">Fundamental y su octava con la misma digitación. Empezá por el Sol, que es el más fácil, y bajá hasta el Sib, que es el más difícil. Si la octava sale con la llave de octava pero no sin ella, el problema es de garganta, no de presión.</p>
+  <div class="sheet" id="ov-ov1"></div>
+
+  <h3>2. Serie larga</h3>
+  <p class="how">Subir por los armónicos de cada digitación grave y volver sin cortar. Los más agudos tardan semanas en salir; hacé hasta donde llegues y quedate un rato ahí.</p>
+  <div class="sheet" id="ov-ov2"></div>
+
+  <h3>3. Arpegio de armónicos</h3>
+  <p class="how">Arpegio mayor hecho solo con armónicos, todo ligado. Es el ejercicio de control: cada nota tiene un lugar exacto de la lengua y acá tenés que ir a buscarlo rápido.</p>
+  <div class="sheet" id="ov-ov3"></div>
+
+  <h3>4. Escala con armónicos de octava</h3>
+  <p class="how">La escala de Sib mayor tocando cada nota como armónico de la digitación de una octava abajo. Tocala lenta, con afinador, y tratá de que suene como una melodía, no como notas sueltas.</p>
+  <div class="sheet" id="ov-ov4"></div>
+
+  <h3>5. Del armónico a la nota real y vuelta</h3>
+  <p class="how">Sostenés el armónico, cambiás a la digitación real sin cortar el aire, y volvés. El objetivo es que el cambio no se escuche: que la nota real tenga el mismo color abierto que el armónico.</p>
+  <div class="sheet" id="ov-ov5"></div>
+
+  <h3>6. Bajar sin cortar el aire</h3>
+  <p class="how">Empezás en un armónico agudo y vas bajando por la serie hasta el fundamental, todo ligado. Es el ejercicio más directo para el grave con lip-out: obliga a abrir la garganta en cada paso sin tocar la embocadura.</p>
+  <div class="sheet" id="ov-ov6"></div>
+</section>
+
+<section id="articulacion">
+  <h2>Articulación</h2>
+  <h3>Qué es atacar una nota</h3>
+  <p>Atacar es empezar la nota con la lengua. La lengua funciona como una válvula: mientras toca la caña, la caña no vibra; cuando la soltás, vibra y la nota arranca con un comienzo definido. Una nota ligada arranca sin lengua: el aire ya está pasando y solo cambiás los dedos.</p>
+  <ol class="routine">
+    <li><span class="min">Apoyo</span><span>La punta de la lengua, o apenas detrás de la punta, toca suave la punta de la caña. Contacto liviano, como con la yema del dedo.</span></li>
+    <li><span class="min">Aire</span><span>Soplás como para tocar. El aire se acumula detrás de la lengua, todavía sin sonido.</span></li>
+    <li><span class="min">Soltar</span><span>La lengua se va hacia abajo y atrás, como diciendo “du” o “da”. El ataque viene de soltar, no de golpear.</span></li>
+    <li><span class="min">Final</span><span>En una nota normal la lengua queda abajo y el aire sigue hasta la siguiente. En staccato vuelve enseguida a la caña, como “dut”. El aire nunca se corta desde la garganta.</span></li>
+  </ol>
+  <p class="how">Errores típicos: golpear fuerte (sale un “tac” o se ahoga), mover la mandíbula o el mentón (el movimiento es de pocos milímetros), usar el medio de la lengua (ataque lento y “gordo”) o cortar con la garganta como “hu-hu-hu”. Con lip-out el labio aprieta menos la caña, así que la lengua tiene que ser todavía más liviana.</p>
+
+  <h3>Lengua sin cortar el aire</h3>
+  <p class="how">Sostené un Sol medio sin lengua y, sin cortar el aire, tocá y soltá la caña: “duuu-du-du-du”. La nota se interrumpe un instante y vuelve. Es lo más importante de todo: la lengua interrumpe la caña, no el soplido.</p>
+  <div class="sheet" id="art-lengua"></div>
+
+  <h3>Patrones de articulación</h3>
+  <p class="how">Basados en la hoja de patrones de Eddie Rich. La escala es siempre la misma (Fa a Fa) y solo cambia la articulación: bajo una ligadura solo la primera nota lleva lengua, las notas sueltas se atacan con “du” a todo su valor y las de punto van en staccato. Cada compás se repite cuatro veces sin cortar antes de pasar al siguiente. Negra entre 60 y 70, primero con corcheas derechas y después con swing.</p>
+  <div class="sheet" id="art-rich"></div>
+  <p class="how"><strong>Compás 11:</strong> es la articulación bebop. Lengua en los contratiempos (Sol, Si♭, Re) y ligado hacia la nota del tiempo; en loop, el último Fa liga al primero. Exagerá un poco el contratiempo y que la nota del tiempo salga más suave.</p>
+  <p class="how"><strong>Compases 12 a 14:</strong> grupos de 3 y 2, así que la lengua cae fuera del tiempo y aparecen acentos desplazados. Contá en voz alta o con el metrónomo marcando solo 2 y 4.</p>
+  <p class="how"><strong>Compases 4 a 10:</strong> la nota que sigue a un staccato no tiene que salir con golpe. El staccato lo corta la lengua; el aire empuja igual.</p>
+  <p class="how">Arrancá en esta octava, donde la embocadura nueva está más firme, y cuando salgan limpios llevalos una octava abajo, bajando la escala y a otras tonalidades. Las cuatro líneas vacías de la hoja original son para inventar tus propios patrones.</p>
+</section>
+
+<section id="escalas">
+  <h2>Escalas</h2>
+  <p>Elegí tonalidad, tipo, patrón y rango; la partitura se arma sola. “Rango completo” recorre la escala de Sib grave a Fa agudo, que es como más rinde para unificar los registros. El patrón “Foco grave” se queda en la parte baja del instrumento.</p>
+  <div class="controls">
+    <label>Tónica <select id="s-tonic"></select></label>
+    <label>Tipo <select id="s-mode">
+      <option value="mayor">Mayor</option><option value="menorNat">Menor natural</option><option value="menorArm">Menor armónica</option><option value="menorMel">Menor melódica</option>
+      <option value="dorico">Dórico</option><option value="frigio">Frigio</option><option value="lidio">Lidio</option><option value="mixolidio">Mixolidio</option><option value="locrio">Locrio</option>
+      <option value="pentaMayor">Pentatónica mayor</option><option value="pentaMenor">Pentatónica menor</option><option value="blues">Blues</option>
+      <option value="bebopDom">Bebop dominante</option><option value="bebopMayor">Bebop mayor</option>
+    </select></label>
+    <label>Patrón <select id="s-pattern">
+      <option value="escala">Escala</option><option value="bajando">Escala (bajando primero)</option><option value="terceras">Terceras</option><option value="grupos4">Grupos de 4</option><option value="arpegios">Arpegios (1-3-5-3)</option><option value="graves">Foco grave</option>
+    </select></label>
+    <label>Rango <select id="s-range">
+      <option value="completo">Rango completo</option><option value="1oct">1 octava</option><option value="2oct">2 octavas</option>
+    </select></label>
+  </div>
+  <div class="bar"><button id="s-random" type="button">Tonalidad al azar</button><button id="s-next" type="button">Siguiente por quintas</button></div>
+  <div class="sheet" id="scale"></div>
+  <p class="how">Menor melódica escrita en su forma de jazz, igual subiendo y bajando. Corcheas; empezá a la velocidad en que no se te escapa ninguna nota del grave.</p>
+</section>
+
+<section id="triadas">
+  <h2>Tríadas</h2>
+  <p>Seis ejercicios que van de lo más simple a lo más musical. Empezá por el arpegio en todo el rango para que la tríada te quede en los dedos, después las inversiones, y recién ahí las diatónicas y el ciclo de cuartas, que son las que más se usan tocando temas.</p>
+  <div class="controls">
+    <label>Ejercicio <select id="t-ex">
+      <option value="arpegio">Arpegio por todo el rango</option>
+      <option value="inversiones">Inversiones 1-3-5-8</option>
+      <option value="ondas">Ondas 1-3-5-3</option>
+      <option value="diatUp">Diatónicas, todas subiendo</option>
+      <option value="diatAlt">Diatónicas alternadas</option>
+      <option value="ciclo">Ciclo de cuartas (12 tonos)</option>
+    </select></label>
+    <label>Tónica <select id="t-tonic"></select></label>
+    <label>Calidad <select id="t-qual">
+      <option value="mayor">Mayor</option><option value="menor">Menor</option><option value="dis">Disminuida</option><option value="aum">Aumentada</option>
+    </select></label>
+  </div>
+  <div class="bar"><button id="t-next" type="button">Siguiente por quintas</button></div>
+  <div class="sheet" id="triad"></div>
+  <p class="how" id="t-how"></p>
+</section>
+
+<section id="bebop">
+  <h2>Bebop</h2>
+  <p>Todo está en altura escrita y casi todo sobre un ii-V-I a Do (Dm7, G7, Cmaj7 escritos, que en concierto es un ii-V-I a Sib, la tonalidad más común del jazz). Tocá cada ejercicio con swing: corcheas largas-cortas, sin exagerar, y con el metrónomo marcando solo los tiempos 2 y 4. Cuando un ejercicio te sale, pasalo a otras tonalidades de a una.</p>
+
+  <h3>1. Notas guía</h3>
+  <p class="how">Terceras y séptimas, que son las notas que definen cada acorde. La séptima de un acorde baja medio tono a la tercera del siguiente. Tocalo con un play-along o una grabación del ii-V-I para escuchar cómo cada nota “cambia de color” sin moverse casi nada.</p>
+  <div class="sheet" id="bop-b1"></div>
+
+  <h3>2. Escala bebop dominante</h3>
+  <p class="how">Mixolidia con la séptima mayor agregada como nota de paso. Bajando desde cualquier nota del acorde, el agregado hace que las notas del acorde caigan siempre en los tiempos. Ese es todo el secreto de la escala.</p>
+  <div class="sheet" id="bop-b2"></div>
+
+  <h3>3. Escala bebop mayor</h3>
+  <p class="how">Mayor con el Lab agregado entre Sol y La. Mismo principio: bajando desde la tónica, la tercera o la quinta, en los tiempos quedan las notas de C6.</p>
+  <div class="sheet" id="bop-b3"></div>
+
+  <h3>4. Aproximación cromática</h3>
+  <p class="how">Cada nota del acorde, en tiempo fuerte, precedida por la nota que está medio tono abajo o arriba en el contratiempo. La nota cromática nunca va en el tiempo: siempre de paso, siempre resolviendo.</p>
+  <div class="sheet" id="bop-b4"></div>
+
+  <h3>5. Rodeos (enclosures)</h3>
+  <p class="how">Rodear la nota objetivo con una nota de arriba y una de abajo antes de tocarla en el tiempo. Es probablemente el recurso más característico del bebop. Practicalo hasta que lo escuches como un solo gesto que llega a la nota, no como tres notas.</p>
+  <div class="sheet" id="bop-b5"></div>
+
+  <h3>6. Frases de ii-V-I</h3>
+  <p class="how">Tres frases que combinan todo lo anterior: arpegio desde la tercera, escala bebop, rodeo y el giro en tresillo. Aprendelas de memoria y en las doce tonalidades; después empezá a cambiarles el principio o el final.</p>
+  <div class="sheet" id="bop-b6"></div>
+
+  <h3>7. Articulación</h3>
+  <p class="how">Lengua en los contratiempos y ligado hacia el tiempo siguiente, con un leve acento en el contratiempo. Las notas de los tiempos casi no se atacan. Pensá en la sílaba “du-BA”: el BA es el contratiempo. Este es el sonido que diferencia una línea bebop de una escala bien tocada.</p>
+  <div class="sheet" id="bop-b7"></div>
+
+  <p>Las escalas bebop dominante y mayor también están en el generador de escalas, para cualquier tónica. Usalas con rango de 1 o 2 octavas, que es como las notas del acorde quedan en los tiempos.</p>
+</section>
+
+<section id="afinador">
+  <h2>Afinador</h2>
+  <p>Escucha tu saxo por el micrófono y te muestra la nota y cuántos cents está desafinada. Por defecto muestra la nota escrita para tenor, igual que la leés en la partitura.</p>
+  <div class="tuner">
+    <div class="t-note" id="tu-note" aria-live="polite">–</div>
+    <div class="t-cents" id="tu-cents">&nbsp;</div>
+    <div>
+      <div class="t-meter" id="tu-meter" aria-hidden="true"><div class="zone"></div><div class="t-needle" id="tu-needle"></div></div>
+      <div class="t-scale"><span>−50</span><span>−25</span><span>0</span><span>+25</span><span>+50</span></div>
+    </div>
+    <div class="t-sub" id="tu-sub">Tocá una nota larga</div>
+  </div>
+  <div class="controls">
+    <label>Mostrar <select id="tu-trans"><option value="14" selected>Nota escrita (tenor)</option><option value="0">Nota de concierto</option></select></label>
+    <label>La de referencia <select id="tu-a4"><option>438</option><option>439</option><option selected>440</option><option>441</option><option>442</option><option>443</option></select></label>
+    <label>Sensibilidad <input type="range" id="tu-gate" min="1" max="30" value="8"></label>
+  </div>
+  <div class="bar"><button id="tu-start" class="primary" type="button">Activar micrófono</button><span id="tu-msg" role="status" class="how" style="margin:0"></span></div>
+  <p class="how">Verde es ±5 cents. Tocá en mezzoforte y mirá la aguja al final de la nota, no en el ataque, que siempre sale un poco alto. Si no detecta nada, subí la sensibilidad; si salta sola con ruidos de fondo, bajala.</p>
+</section>
+
+<section id="metronomo">
+  <h2>Drone, metrónomo y registro</h2>
+  <h3>Drone</h3>
+  <p class="how">Elegí la nota tal como la leés en la partitura; suena a la altura real del tenor (una novena mayor abajo), así no tenés que transponer. Usá volumen bajo o un auricular de un solo lado para escucharte.</p>
+  <div class="controls">
+    <label>Nota escrita <select id="d-note"></select></label>
+    <label>Registro <select id="d-oct"><option value="4">Grave</option><option value="5" selected>Medio</option><option value="6">Agudo</option></select></label>
+    <label>Volumen <input type="range" id="d-vol" min="0" max="100" value="55"></label>
+  </div>
+  <div class="bar">
+    <button id="d-play" class="primary" type="button">Tocar drone</button>
+    <label style="flex-direction:row;align-items:center;gap:.4rem"><input type="checkbox" id="d-fifth"> Agregar la quinta</label>
+    <span id="d-info" class="how" style="margin:0"></span>
+  </div>
+  <h3>Metrónomo</h3>
+  <div class="bar">
+    <button id="m-toggle" class="primary" type="button">Iniciar metrónomo</button>
+    <input id="m-bpm" type="range" min="40" max="220" value="72" aria-label="Tempo">
+    <span><strong id="m-val">72</strong> bpm</span>
+    <span class="beat" id="m-beat" aria-hidden="true"></span>
+  </div>
+  <div class="bar">
+    <button id="log-save" type="button">Guardar este tempo para el último ejercicio</button>
+    <span id="log-msg" role="status"></span>
+  </div>
+  <div class="log tablewrap"><table><thead><tr><th>Ejercicio</th><th>Patrón</th><th>Mejor tempo</th><th>Fecha</th></tr></thead><tbody id="log-body"></tbody></table></div>
+  <p class="how">El registro queda guardado solo en este navegador.</p>
+</section>
+</main>
+<footer>Altura escrita para saxo tenor en Sib. Rango usado: Sib grave a Fa agudo.</footer>
+
+<script>
+// Generador de escalas para saxo tenor (altura escrita). Rango: Sib3 (58) a Fa6 (89).
+const LETTERS = ['C','D','E','F','G','A','B'];
+const NAT = [0,2,4,5,7,9,11];
+const LO = 58, HI = 89;
+
+const MODES = { // pasos de letra y semitonos
+  mayor:      {steps:[0,1,2,3,4,5,6], semis:[0,2,4,5,7,9,11], parent:'self', k:''},
+  dorico:     {steps:[0,1,2,3,4,5,6], semis:[0,2,3,5,7,9,10], parent:'self', k:'dor'},
+  frigio:     {steps:[0,1,2,3,4,5,6], semis:[0,1,3,5,7,8,10], parent:'self', k:'phr'},
+  lidio:      {steps:[0,1,2,3,4,5,6], semis:[0,2,4,6,7,9,11], parent:'self', k:'lyd'},
+  mixolidio:  {steps:[0,1,2,3,4,5,6], semis:[0,2,4,5,7,9,10], parent:'self', k:'mix'},
+  menorNat:   {steps:[0,1,2,3,4,5,6], semis:[0,2,3,5,7,8,10], parent:'self', k:'m'},
+  locrio:     {steps:[0,1,2,3,4,5,6], semis:[0,1,3,5,6,8,10], parent:'self', k:'loc'},
+  menorArm:   {steps:[0,1,2,3,4,5,6], semis:[0,2,3,5,7,8,11], parent:'menorNat', k:'m'},
+  menorMel:   {steps:[0,1,2,3,4,5,6], semis:[0,2,3,5,7,9,11], parent:'menorNat', k:'m'},
+  pentaMayor: {steps:[0,1,2,4,5],     semis:[0,2,4,7,9],      parent:'mayor', k:''},
+  pentaMenor: {steps:[0,2,3,4,6],     semis:[0,3,5,7,10],     parent:'menorNat', k:'m'},
+  blues:      {steps:[0,2,3,4,4,6],   semis:[0,3,5,6,7,10],   parent:'menorNat', k:'m'},
+};
+
+function parseTonic(t){ // "Bb", "F#", "C"
+  const li = LETTERS.indexOf(t[0]);
+  let alt = 0; for (const c of t.slice(1)) alt += c==='#'?1:-1;
+  return {li, alt};
+}
+
+function scaleNotes(tonic, mode){
+  const {li, alt} = parseTonic(tonic);
+  const tonicPc = NAT[li] + alt;
+  const m = MODES[mode];
+  const out = [];
+  for (let o = 2; o <= 7; o++){
+    m.steps.forEach((s, i) => {
+      const L = (li + s) % 7;
+      const oct = o + Math.floor((li + s) / 7);
+      // semitono objetivo absoluto
+      const target = (o + 1) * 12 + tonicPc + m.semis[i];
+      const natural = (oct + 1) * 12 + NAT[L];
+      out.push({L, oct, alt: target - natural, p: target});
+    });
+  }
+  return out.filter(n => n.p >= LO && n.p <= HI).sort((a,b)=>a.p-b.p);
+}
+
+function keySig(tonic, mode){ // alteraciones por letra
+  const m = MODES[mode];
+  const base = m.parent === 'self' ? mode : m.parent;
+  const {li, alt} = parseTonic(tonic);
+  const bm = MODES[base];
+  const sig = [0,0,0,0,0,0,0];
+  bm.steps.forEach((s,i)=>{
+    const L = (li+s)%7;
+    let a = (NAT[li] + alt + bm.semis[i]) - (NAT[L] + (li+s>=7?12:0));
+    sig[L] = a;
+  });
+  return sig;
+}
+
+function abcPitch(n){
+  let name = LETTERS[n.L];
+  if (n.oct >= 5){ name = name.toLowerCase(); name += "'".repeat(n.oct - 5); }
+  else { name += ','.repeat(4 - n.oct); }
+  return name;
+}
+function accStr(a){ return a===0?'=':a>0?'^'.repeat(a):'_'.repeat(-a); }
+
+function applyPattern(asc, pattern){
+  const desc = [...asc].reverse();
+  const seq = [];
+  const n = asc.length;
+  if (pattern === 'escala'){ seq.push(...asc, ...desc.slice(1)); }
+  else if (pattern === 'bajando'){ seq.push(...desc, ...asc.slice(1)); }
+  else if (pattern === 'terceras'){
+    for (let i=0;i+2<n;i++) seq.push(asc[i], asc[i+2]);
+    for (let i=0;i+2<n;i++) seq.push(desc[i], desc[i+2]);
+    seq.push(asc[0]);
+  } else if (pattern === 'grupos4'){
+    for (let i=0;i+3<n;i++) seq.push(asc[i],asc[i+1],asc[i+2],asc[i+3]);
+    for (let i=0;i+3<n;i++) seq.push(desc[i],desc[i+1],desc[i+2],desc[i+3]);
+    seq.push(asc[0]);
+  } else if (pattern === 'arpegios'){
+    for (let i=0;i+4<n;i++) seq.push(asc[i],asc[i+2],asc[i+4],asc[i+2]);
+    for (let i=0;i+4<n;i++) seq.push(desc[i],desc[i+2],desc[i+4],desc[i+2]);
+    seq.push(asc[0]);
+  } else if (pattern === 'graves'){ // foco registro grave: desde la nota más grave hasta la 2da octava, con notas repetidas largas abajo
+    const low = asc.filter(x => x.p <= LO + 14);
+    seq.push(...low, ...[...low].reverse().slice(1));
+  }
+  return seq;
+}
+
+function buildRange(tonic, mode, range){
+  const all = scaleNotes(tonic, mode);
+  if (range === 'completo') return all;
+  const {li, alt} = parseTonic(tonic);
+  const tpc = ((NAT[li]+alt)%12+12)%12;
+  const start = all.findIndex(x => ((x.p%12)+12)%12 === tpc);
+  const top = all[start].p + (range === '1oct' ? 12 : 24);
+  return all.slice(start).filter(x => x.p <= top);
+}
+
+function toAbc({tonic, mode, pattern, range, title, barsPerLine=4}){
+  const asc = buildRange(tonic, mode, pattern==='graves'?'completo':range);
+  const seq = applyPattern(asc, pattern);
+  const sig = keySig(tonic, mode);
+  const m = MODES[mode];
+  const per = 8; // corcheas por compás
+  let body = '', state = {}, count = 0, bars = 0;
+  seq.forEach((n, idx) => {
+    const isLast = idx === seq.length - 1;
+    const key = n.L + '_' + n.oct;
+    const cur = key in state ? state[key] : sig[n.L];
+    let acc = '';
+    if (cur !== n.alt){ acc = accStr(n.alt); state[key] = n.alt; }
+    let len = 1;
+    if (isLast){ len = per - count; if (len < 2){ // completar y agregar compás final
+        body += acc + abcPitch(n) + (len===1?'':len) + ' |';
+        bars++; if (bars % barsPerLine === 0) body += '\n';
+        state = {};
+        body += ' ' + abcPitch(n) + '8 |]';
+        return; } }
+    body += acc + abcPitch(n) + (len===1?'':len);
+    count += len;
+    if (count % 4 === 0 && count < per) body += ' ';
+    if (count === per){
+      count = 0; state = {}; bars++;
+      body += isLast ? ' |]' : ' |';
+      if (!isLast && bars % barsPerLine === 0) body += '\n';
+      else body += ' ';
+    }
+  });
+  const kname = tonic + m.k;
+  return `X:1\nT:${title||''}\nM:4/4\nL:1/8\nK:${kname}\n${body}`;
+}
+
+
+
+// Tríadas — usa scaleNotes, keySig, abcPitch, accStr, MODES, parseTonic, NAT, LO, HI de gen.js
+Object.assign(MODES, {
+  triMayor: {steps:[0,2,4], semis:[0,4,7], parent:'mayor', k:''},
+  triMenor: {steps:[0,2,4], semis:[0,3,7], parent:'menorNat', k:'m'},
+  triDis:   {steps:[0,2,4], semis:[0,3,6], parent:'menorNat', k:'m'},
+  triAum:   {steps:[0,2,4], semis:[0,4,8], parent:'mayor', k:''},
+});
+const TRI_MODE = {mayor:'triMayor', menor:'triMenor', dis:'triDis', aum:'triAum'};
+const TRI_SYM = {mayor:'', menor:'m', dis:'°', aum:'+'};
+
+// items: {n, len} o {rest:true, len} ; opcional chord (texto sobre la nota)
+function emit(items, sig, per, beat, barsPerLine){
+  let body = '', state = {}, count = 0, bars = 0;
+  items.forEach((it, idx) => {
+    const isLast = idx === items.length - 1;
+    if (it.chord) body += `"^${it.chord}"`;
+    if (it.rest){ body += 'z' + (it.len===1?'':it.len); }
+    else {
+      const n = it.n, key = n.L + '_' + n.oct;
+      const cur = key in state ? state[key] : sig[n.L];
+      let acc = '';
+      if (cur !== n.alt){ acc = accStr(n.alt); state[key] = n.alt; }
+      body += acc + abcPitch(n) + (it.len===1?'':it.len);
+    }
+    count += it.len;
+    if (count % beat === 0 && count < per) body += ' ';
+    if (count >= per){
+      count = 0; state = {}; bars++;
+      body += isLast ? ' |]' : ' |';
+      if (!isLast && bars % barsPerLine === 0) body += '\n'; else if (!isLast) body += ' ';
+    } else if (isLast){
+      // completar el compás con silencio
+      body += 'z' + ((per-count)===1?'':(per-count)) + ' |]';
+    }
+  });
+  return body;
+}
+
+function cleanSeq(seq){ return seq.map(n => ({n, len:1})); }
+function finishLong(items, per){ // alarga la última nota hasta fin de compás, o agrega un compás
+  const used = items.slice(0,-1).reduce((a,b)=>a+b.len,0) % per;
+  const last = items[items.length-1];
+  const room = per - used;
+  if (room >= 2) last.len = room; else items.push({n:last.n, len:per});
+  return items;
+}
+
+function triadAbc({tonic, qual, ex, barsPerLine=4}){
+  let title, items, sig, K, M = '4/4', per = 8, beat = 4;
+  if (ex === 'ciclo'){
+    const order = ['C','F','Bb','Eb','Ab','Db','Gb','B','E','A','D','G'];
+    sig = [0,0,0,0,0,0,0]; K = 'C';
+    items = [];
+    order.forEach(t => {
+      const tones = scaleNotes(t, TRI_MODE[qual]);
+      const {li, alt} = parseTonic(t); const pc = ((NAT[li]+alt)%12+12)%12;
+      const start = tones.findIndex(x => ((x.p%12)+12)%12 === pc);
+      const [a,b,c,d] = tones.slice(start, start+4);
+      const sym = t.replace('b','♭') + TRI_SYM[qual];
+      items.push({n:a,len:1,chord:sym},{n:b,len:1},{n:c,len:1},{n:d,len:1},{n:c,len:1},{n:b,len:1},{n:a,len:2});
+    });
+    items[items.length-1].len = 2;
+    title = 'Ciclo de cuartas · tríadas ' + ({mayor:'mayores',menor:'menores',dis:'disminuidas',aum:'aumentadas'})[qual];
+  } else if (ex === 'diatUp' || ex === 'diatAlt'){
+    const mode = qual === 'menor' ? 'menorArm' : 'mayor';
+    const all = scaleNotes(tonic, mode);
+    const {li, alt} = parseTonic(tonic); const pc = ((NAT[li]+alt)%12+12)%12;
+    const start = all.findIndex(x => ((x.p%12)+12)%12 === pc);
+    const s = all.slice(start);
+    sig = keySig(tonic, mode); K = tonic + MODES[mode].k;
+    M = '12/8'; per = 12; beat = 3;
+    const nTri = Math.min(8, s.length - 4); // grados que entran en el rango
+    const tri = i => [s[i], s[i+2], s[i+4]];
+    const seq = [];
+    if (ex === 'diatUp'){
+      for (let i=0;i<nTri;i++) seq.push(...tri(i));
+      for (let i=nTri-1;i>=0;i--) seq.push(...tri(i).reverse());
+    } else {
+      for (let i=0;i<nTri;i++){ const t = tri(i); seq.push(...(i%2===0 ? t : t.reverse())); }
+      for (let i=nTri-1;i>=0;i--){ const t = tri(i); seq.push(...(i%2===0 ? t.reverse() : t)); }
+    }
+    seq.push(s[0]);
+    items = finishLong(cleanSeq(seq), per);
+    title = `Tríadas diatónicas de ${tonic.replace('b','♭')} ${qual==='menor'?'menor armónica':'mayor'} · ` + (ex==='diatUp'?'todas subiendo':'alternadas');
+  } else {
+    const mode = TRI_MODE[qual];
+    const asc = scaleNotes(tonic, mode);
+    sig = keySig(tonic, mode); K = tonic + MODES[mode].k;
+    const desc = [...asc].reverse(); const n = asc.length; const seq = [];
+    if (ex === 'arpegio'){ seq.push(...asc, ...desc.slice(1)); }
+    else if (ex === 'inversiones'){
+      for (let i=0;i+3<n;i++) seq.push(asc[i],asc[i+1],asc[i+2],asc[i+3]);
+      for (let i=0;i+3<n;i++) seq.push(desc[i],desc[i+1],desc[i+2],desc[i+3]);
+      seq.push(asc[0]);
+    } else if (ex === 'ondas'){
+      for (let i=0;i+2<n;i++) seq.push(asc[i],asc[i+1],asc[i+2],asc[i+1]);
+      for (let i=0;i+2<n;i++) seq.push(desc[i],desc[i+1],desc[i+2],desc[i+1]);
+      seq.push(asc[0]);
+    }
+    items = finishLong(cleanSeq(seq), per);
+    const qn = {mayor:'mayor',menor:'menor',dis:'disminuida',aum:'aumentada'}[qual];
+    title = `${tonic.replace('b','♭')}${TRI_SYM[qual]} (${qn}) · ` + ({arpegio:'arpegio por todo el rango', inversiones:'inversiones 1-3-5-8', ondas:'ondas 1-3-5-3'})[ex];
+  }
+  const body = emit(items, sig, per, beat, barsPerLine);
+  return {title, abc:`X:1\nT:${title}\nM:${M}\nL:1/8\nK:${K}\n${body}`};
+}
+
+
+const OV = {
+ov1: `X:1
+T:1. Octava armónica, de Sol a Sib grave
+M:4/4
+L:1/4
+K:C
+"^dig. Sol"(G2 g2) | "^dig. Fa#"(^F2 ^f2) | "^dig. Fa"(=F2 =f2) | "^dig. Mi"(E2 e2) | "^dig. Mib"(_E2 _e2) |
+"^dig. Re"(D2 d2) | "^dig. Do#"(^C2 ^c2) | "^dig. Do"(=C2 =c2) | "^dig. Si"(B,2 B2) | "^dig. Sib"(_B,2 _B2) |]`,
+ov2: `X:1
+T:2. Serie larga de armónicos
+M:4/4
+L:1/4
+K:C
+"^dig. Sib grave"(_B,2 _B2 | =f2 _b2 | =d'2 _b2 | =f2 _B2 | _B,4) |
+"^dig. Re grave"(D2 d2 | a2 d'2 | a2 d2 | D4) |
+"^dig. Mib grave"(_E2 _e2 | _b2 _e'2 | _b2 _e2 | _E4) |
+"^dig. Mi grave"(E2 e2 | b2 e'2 | b2 e2 | E4) |
+"^dig. Fa grave"(=F2 =f2 | c'2 =f'2 | c'2 =f2 | =F4) |]`,
+ov3: `X:1
+T:3. Arpegio de armónicos
+M:4/4
+L:1/4
+K:C
+"^dig. Sib grave"(_B =f _b =d' | _b =f _B2) | (_B =f _b =d' | _b =f _B2) |
+"^dig. Si grave"(B ^f b ^d' | b ^f B2) | (B ^f b ^d' | b ^f B2) |
+"^dig. Do grave"(c g c' e' | c' g c2) | (c g c' e' | c' g c2) |]`,
+ov4: `X:1
+T:4. Escala de Sib con armónicos de octava
+M:4/4
+L:1/4
+K:Bb
+"^Sib grave"B2 "^Do grave"c2 | "^Re grave"d2 "^Mib grave"e2 | "^Fa grave"f2 "^Sol sin octava"g2 | "^La sin octava"a2 "^Sib medio"b2 |
+"^La sin octava"a2 "^Sol sin octava"g2 | "^Fa grave"f2 "^Mib grave"e2 | "^Re grave"d2 "^Do grave"c2 | "^Sib grave"B4 |]`,
+ov5: `X:1
+T:5. Del armónico a la nota real y vuelta
+M:4/4
+L:1/4
+K:C
+"^armónico (dig. Sib grave)"(_B2 "^real"_B2- | _B2 "^armónico"_B2) | "^armónico (dig. Sib grave)"(=f2 "^real"=f2- | =f2 "^armónico"=f2) |
+"^armónico (dig. Do grave)"(c2 "^real"c2- | c2 "^armónico"c2) | "^armónico (dig. Do grave)"(g2 "^real"g2- | g2 "^armónico"g2) |]`,
+ov6: `X:1
+T:6. Bajar sin cortar el aire
+M:4/4
+L:1/4
+K:C
+"^dig. Sib grave"(_b2 =f2 | _B2 _B,2-) | _B,2 z2 | "^dig. Si grave"(b2 ^f2 | B2 B,2-) | B,2 z2 |
+"^dig. Do grave"(c'2 g2 | c2 C2-) | C2 z2 | "^dig. Do# grave"(^c'2 ^g2 | ^c2 ^C2-) | ^C2 z2 |]`
+};
+
+
+const BOP = {
+b1: `X:1
+T:1. Notas guía en un ii-V-I
+M:4/4
+L:1/4
+K:C
+"Dm7"c4 | "G7"B4 | "Cmaj7"B4 | z4 | "Dm7"F4 | "G7"F4 | "Cmaj7"E4 | z4 |
+"Dm7"c2 F2 | "G7"B2 F2 | "Cmaj7"E2 B2 | z4 |]`,
+b2: `X:1
+T:2. Escala bebop dominante desde cada nota del acorde
+M:4/4
+L:1/8
+K:C
+"G7""^desde la fundamental"g^f=fe dcBA | G4 z4 | "G7""^desde la 3ra"ba g^f =fedc | B4 z4 |
+"G7""^desde la 5ta"d'c'ba g^f=fe | d4 z4 | "G7""^desde la 7ma"fedc BAG^F | =F4 z4 |]`,
+b3: `X:1
+T:3. Escala bebop mayor
+M:4/4
+L:1/8
+K:C
+"C6"c'ba_a gfed | c4 z4 | "C6""^desde la 3ra"edcB A_AGF | E4 z4 |
+"C6""^desde la 5ta"gfed cBA_A | G4 z4 |]`,
+b4: `X:1
+T:4. Aproximación cromática a las notas del acorde
+M:4/4
+L:1/8
+K:C
+"G7""^desde abajo"z^FG^A B^cde | f4 z4 | "G7""^desde arriba"z_g=f_e dcB_A | G4 z4 |
+"Cmaj7""^desde abajo"zBc^d e^fg^a | b4 z4 | "Cmaj7""^desde arriba"zc'b_a gfe_e | d4 z4 |]`,
+b5: `X:1
+T:5. Rodeos (enclosures)
+M:4/4
+L:1/8
+K:C
+"Cmaj7""^diatónico arriba, cromático abajo"z2 dB c2 z2 | z2 f^d e2 z2 | z2 a^f g2 z2 | z2 c'^a b2 z2 |
+"Cmaj7""^cromático arriba y abajo"z2 _dB c2 z2 | z2 f^d e2 z2 | z2 _a^f g2 z2 | z2 c'^a b2 z2 |
+"Cmaj7""^rodeos de cuatro notas"z d^cB c4 | z fd^d e4 | z a_a^f g4 | z c'a^a b4 |]`,
+b6: `X:1
+T:6. Frases de ii-V-I
+M:4/4
+L:1/8
+K:C
+"^Swing""Dm7"DFAc edcA | "G7"Bdfa g^f=fd | "Cmaj7"e4 z4 |
+"Dm7"d'c'af edcA | "G7"BAG^F =FAf^d | "Cmaj7"e4 z4 |
+"Dm7"(3fgf edcA FD | "G7"Bdfa (3gag fd | "Cmaj7"e4 z4 |]`,
+b7: `X:1
+T:7. Articulación bebop
+M:4/4
+L:1/8
+K:C
+"^Swing""G7"g(!>!^f =f)(!>!e d)(!>!c B)(!>!A | G2) z6 | "C6"c'(!>!b a)(!>!_a g)(!>!f e)(!>!d | c2) z6 |
+"Dm7"D(!>!F A)(!>!c e)(!>!d c)(!>!A | "G7"B)(!>!d f)(!>!a g)(!>!^f =f)(!>!d | "Cmaj7"e2) z6 |]`
+};
+
+
+Object.assign(MODES, {
+  bebopDom:   {steps:[0,1,2,3,4,5,6,6], semis:[0,2,4,5,7,9,10,11], parent:'mixolidio', k:'mix'},
+  bebopMayor: {steps:[0,1,2,3,4,5,5,6], semis:[0,2,4,5,7,8,9,11], parent:'mayor', k:''},
+});
+const ART = {
+lengua: `X:1
+T:Lengua sin cortar el aire
+M:4/4
+L:1/4
+K:C
+"^duuu"G4 | "^du  du  du  du"G G G G | "^duuu"G4 | "^du  du  du  du"G G G G | G4 |]`,
+rich: `X:1
+T:Patrones de articulación (escala de Fa)
+M:4/4
+L:1/8
+K:F
+"^1"|:(FGAB cdef):| "^2"|:(FGAB)(cdef):| "^3"|:(FG)(AB) (cd)(ef):|
+"^4"|:(FGA).B (cde).f:| "^5"|:.F(GAB) .c(def):| "^6"|:(FG).A.B (cd).e.f:|
+"^7"|:.F.G(AB) .c.d(ef):| "^8"|:(FGAB) .c.d.e.f:| "^9"|:.F.G.A.B (cdef):|
+"^10"|:.F(GA).B .c(de).f:| "^11 bebop"|:F(GA)(Bc) (de)f:| "^12  3+3+2"|:(FGA)(Bc d)(ef):|
+"^13  2+3+3"|:(FG)(AB c)(def):| "^14  3+2+3"|:(FGA)(Bc) (def):| "^15"|:.F.G.A.B .c.d.e.f:|]`
+};
+
+
+const EX = {
+largas: `X:1
+T:Notas largas descendentes
+M:4/4
+L:1/4
+K:C
+!pp!!<(!G2- G2-!<)!!>(! | G2- G2!>)! | !pp!!<(!^F2- F2-!<)!!>(! | ^F2- ^F2!>)! | !pp!!<(!=F2- F2-!<)!!>(! | F2- F2!>)! |
+!pp!!<(!E2- E2-!<)!!>(! | E2- E2!>)! | !pp!!<(!_E2- E2-!<)!!>(! | _E2- _E2!>)! | !pp!!<(!D2- D2-!<)!!>(! | D2- D2!>)! |
+!pp!!<(!^C2- C2-!<)!!>(! | ^C2- ^C2!>)! | !pp!!<(!=C2- C2-!<)!!>(! | C2- C2!>)! | !pp!!<(!B,2- B,2-!<)!!>(! | B,2- B,2!>)! |
+!pp!!<(!_B,2- B,2-!<)!!>(! | _B,2- _B,2!>)! |]`,
+armonicos: `X:1
+T:Armónicos sobre digitaciones graves
+M:4/4
+L:1/4
+K:C
+"^dig. Sib grave"_B,4 | _B4 | =f4 | _b4 | =f4 | _B4 | _B,4 |]
+"^dig. Si grave"B,4 | B4 | ^f4 | b4 | ^f4 | B4 | B,4 |]
+"^dig. Do grave"C4 | c4 | g4 | c'4 | g4 | c4 | C4 |]
+"^dig. Do# grave"^C4 | ^c4 | ^g4 | ^c'4 | ^g4 | ^c4 | ^C4 |]`,
+espejo: `X:1
+T:Armónico y nota real (igualar el color)
+M:4/4
+L:1/4
+K:C
+"^armónico (dig. Sib grave)"=f4 | "^digitación real"f4 | "^armónico (dig. Si grave)"^f4 | "^real"^f4 |
+"^armónico (dig. Do grave)"g4 | "^real"g4 | "^armónico (dig. Do# grave)"^g4 | "^real"^g4 |]`,
+octavas: `X:1
+T:Octavas ligadas hacia abajo y bajada cromática
+M:4/4
+L:1/4
+K:C
+(a2 A2) | (^g2 ^G2) | (=g2 =G2) | (^f2 ^F2) | (=f2 =F2) | (e2 E2) |
+(_e2 _E2) | (d2 D2) | (D ^C =C B, | _B,4) |]`,
+saltos: `X:1
+T:Saltos ligados al grave
+M:4/4
+L:1/4
+K:C
+(G2 _B,2) | (G2 B,2) | (G2 C2) | (G2 ^C2) | (A2 _B,2) | (c2 _B,2) |
+(d2 _B,2) | (e2 _B,2) | (g2 _B,2) | (_b2 _B,4) |]`,
+ataques: `X:1
+T:Ataques suaves en el grave
+M:4/4
+L:1/4
+K:C
+!pp!"^du"E2 z2 | !pp!"^du"D2 z2 | !pp!"^du"^C2 z2 | !pp!"^du"=C2 z2 |
+!pp!"^du"B,2 z2 | !pp!"^du"_B,2 z2 | !pp!_B, z _B, z | _B,4 |]`
+};
+
+const ABC_OPTS = { responsive:'resize', add_classes:true, paddingtop:6, paddingbottom:6, foregroundColor:'currentColor' };
+function render(id, abc){ if (window.ABCJS) ABCJS.renderAbc(id, abc, ABC_OPTS); else document.getElementById(id).textContent = 'No se pudo cargar el motor de partituras.'; }
+['largas','armonicos','espejo','octavas','saltos','ataques'].forEach(k => render('ex-'+k, EX[k]));
+Object.keys(OV).forEach(k => render('ov-'+k, OV[k]));
+Object.keys(BOP).forEach(k => render('bop-'+k, BOP[k]));
+Object.keys(ART).forEach(k => render('art-'+k, ART[k]));
+
+const TON = {
+  major:['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'],
+  minor:['A','E','B','F#','C#','G#','Eb','Bb','F','C','G','D']
+};
+const LABEL = t => t.replace('b','♭').replace('#','♯');
+const minorish = m => ['menorNat','menorArm','menorMel','pentaMenor','blues','dorico','frigio','locrio'].includes(m);
+const $ = id => document.getElementById(id);
+function fillTonics(keep){
+  const list = minorish($('s-mode').value) ? TON.minor : TON.major;
+  $('s-tonic').innerHTML = list.map(t => `<option value="${t}">${LABEL(t)}</option>`).join('');
+  if (keep && list.includes(keep)) $('s-tonic').value = keep;
+}
+let CURRENT = null;
+function modeName(){ return $('s-mode').selectedOptions[0].textContent; }
+function patName(){ return $('s-pattern').selectedOptions[0].textContent; }
+function drawScale(){
+  const t = $('s-tonic').value, m = $('s-mode').value;
+  const bpl = window.innerWidth < 640 ? 2 : 4;
+  const abc = toAbc({tonic:t, mode:m, pattern:$('s-pattern').value, range:$('s-range').value, title: LABEL(t)+' '+modeName().toLowerCase()+' · '+patName().toLowerCase(), barsPerLine:bpl});
+  render('scale', abc);
+  CURRENT = { key: 'esc|'+t+'|'+m+'|'+$('s-pattern').value, label: LABEL(t)+' '+modeName().toLowerCase(), pat: patName() };
+  try{ localStorage.setItem('sax-sel', JSON.stringify({t,m,p:$('s-pattern').value,r:$('s-range').value})); }catch(e){}
+}
+$('s-mode').addEventListener('change', () => { fillTonics($('s-tonic').value); drawScale(); });
+['s-tonic','s-pattern','s-range'].forEach(id => $(id).addEventListener('change', drawScale));
+$('s-random').addEventListener('click', () => { const o=$('s-tonic').options; $('s-tonic').selectedIndex = Math.floor(Math.random()*o.length); drawScale(); });
+$('s-next').addEventListener('click', () => { const s=$('s-tonic'); s.selectedIndex = (s.selectedIndex+1)%s.options.length; drawScale(); });
+let lastW = window.innerWidth;
+window.addEventListener('resize', () => { if ((lastW<640) !== (window.innerWidth<640)){ lastW = window.innerWidth; drawScale(); drawTriad(); } });
+
+(function init(){
+  let s=null; try{ s = JSON.parse(localStorage.getItem('sax-sel')||'null'); }catch(e){}
+  if (s){ $('s-mode').value=s.m; $('s-pattern').value=s.p; $('s-range').value=s.r; }
+  fillTonics(s && s.t); drawScale();
+})();
+
+
+// Tríadas
+const HOW = {
+  arpegio:'Tríada de la tónica de Sib grave a Fa agudo. Negra = 60 al principio, ligado y después articulado.',
+  inversiones:'Cada grupo arranca en la nota siguiente de la tríada, así pasás por fundamental, primera y segunda inversión sin pensarlo.',
+  ondas:'1-3-5-3 subiendo por la tríada. Sirve mucho para los cambios de registro sin que se corte el sonido.',
+  diatUp:'Las siete tríadas de la tonalidad, en 12/8. Escuchá cómo cambia la calidad de cada acorde. En menor se usa la menor armónica.',
+  diatAlt:'Una tríada sube, la siguiente baja. Es el patrón más útil para improvisar porque no te deja en el mismo lugar.',
+  ciclo:'Las doce tríadas en orden de cuartas, como se mueven las progresiones reales. La raíz queda siempre en el registro medio-grave.'
+};
+function fillTriTonics(keep){
+  const list = $('t-qual').value === 'menor' || $('t-qual').value === 'dis' ? TON.minor : TON.major;
+  $('t-tonic').innerHTML = list.map(t => `<option value="${t}">${LABEL(t)}</option>`).join('');
+  if (keep && list.includes(keep)) $('t-tonic').value = keep;
+}
+function syncTriControls(){
+  const ex = $('t-ex').value, diat = ex.startsWith('diat');
+  $('t-tonic').disabled = ex === 'ciclo'; $('t-next').disabled = ex === 'ciclo';
+  [...$('t-qual').options].forEach(o => { o.disabled = diat && (o.value==='dis' || o.value==='aum'); });
+  if (diat && $('t-qual').selectedOptions[0].disabled) $('t-qual').value = 'mayor';
+}
+function drawTriad(){
+  syncTriControls();
+  const ex = $('t-ex').value, q = $('t-qual').value, t = $('t-tonic').value;
+  const r = triadAbc({tonic:t, qual:q, ex, barsPerLine: window.innerWidth < 640 ? 2 : 4});
+  render('triad', r.abc);
+  $('t-how').textContent = HOW[ex];
+  CURRENT = { key: 'tri|'+t+'|'+q+'|'+ex, label: r.title.split(' · ')[0], pat: $('t-ex').selectedOptions[0].textContent };
+  try{ localStorage.setItem('sax-tri', JSON.stringify({ex,q,t})); }catch(e){}
+}
+$('t-qual').addEventListener('change', () => { fillTriTonics($('t-tonic').value); drawTriad(); });
+['t-ex','t-tonic'].forEach(id => $(id).addEventListener('change', drawTriad));
+$('t-next').addEventListener('click', () => { const s=$('t-tonic'); s.selectedIndex = (s.selectedIndex+1)%s.options.length; drawTriad(); });
+(function(){
+  let s=null; try{ s = JSON.parse(localStorage.getItem('sax-tri')||'null'); }catch(e){}
+  if (s){ $('t-ex').value=s.ex; $('t-qual').value=s.q; }
+  fillTriTonics(s && s.t); drawTriad();
+})();
+
+// Metrónomo
+let ctx=null, timer=null, nextT=0, beat=0;
+function tick(){
+  while (nextT < ctx.currentTime + 0.1){
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.value = beat%4===0 ? 1500 : 1000;
+    g.gain.setValueAtTime(0.0001, nextT); g.gain.exponentialRampToValueAtTime(0.5, nextT+0.002); g.gain.exponentialRampToValueAtTime(0.0001, nextT+0.05);
+    o.connect(g).connect(ctx.destination); o.start(nextT); o.stop(nextT+0.06);
+    const b = beat, delay = Math.max(0,(nextT-ctx.currentTime)*1000);
+    setTimeout(() => { $('m-beat').classList.toggle('on', b%2===0); }, delay);
+    nextT += 60 / +$('m-bpm').value; beat++;
+  }
+}
+$('m-toggle').addEventListener('click', () => {
+  if (timer){ clearInterval(timer); timer=null; $('m-toggle').textContent='Iniciar metrónomo'; $('m-beat').classList.remove('on'); return; }
+  ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); ctx.resume();
+  nextT = ctx.currentTime + 0.05; beat = 0; timer = setInterval(tick, 25); $('m-toggle').textContent='Detener metrónomo';
+});
+$('m-bpm').addEventListener('input', e => { $('m-val').textContent = e.target.value; });
+
+// Registro
+function readLog(){ try{ return JSON.parse(localStorage.getItem('sax-log')||'{}'); }catch(e){ return {}; } }
+function drawLog(){
+  const log = readLog(), rows = Object.values(log).sort((a,b)=> b.date.localeCompare(a.date));
+  $('log-body').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.scale}</td><td>${r.pat}</td><td>${r.bpm} bpm</td><td>${r.date}</td></tr>`).join('')
+    : '<tr><td colspan="4">Todavía no guardaste tempos. Tocá un ejercicio limpio con el metrónomo y guardá el tempo.</td></tr>';
+}
+$('log-save').addEventListener('click', () => {
+  if (!CURRENT){ $('log-msg').textContent = 'Elegí primero una escala o una tríada.'; return; }
+  const log = readLog(), bpm = +$('m-bpm').value, prev = log[CURRENT.key];
+  if (prev && prev.bpm >= bpm){ $('log-msg').textContent = `Ya tenías ${prev.bpm} bpm en este ejercicio.`; return; }
+  log[CURRENT.key] = { scale: CURRENT.label, pat: CURRENT.pat, bpm, date: new Date().toISOString().slice(0,10) };
+  try{ localStorage.setItem('sax-log', JSON.stringify(log)); $('log-msg').textContent = 'Tempo guardado: ' + CURRENT.label + ', ' + CURRENT.pat.toLowerCase() + '.'; }catch(e){ $('log-msg').textContent = 'No se pudo guardar en este navegador.'; }
+  drawLog();
+});
+drawLog();
+
+// Drone
+const D_NAMES=[["Do",0],["Do♯",1],["Re",2],["Mi♭",3],["Mi",4],["Fa",5],["Fa♯",6],["Sol",7],["La♭",8],["La",9],["Si♭",10],["Si",11]];
+const D_CONC=["Do","Re♭","Re","Mi♭","Mi","Fa","Fa♯","Sol","La♭","La","Si♭","Si"];
+$('d-note').innerHTML = D_NAMES.map(([n,p]) => `<option value="${p}">${n}</option>`).join('');
+let dOn=false, dMaster=null, dVoices=[];
+function dCtx(){ ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); if (ctx.state==='suspended') ctx.resume();
+  if (!dMaster){ dMaster = ctx.createGain(); dMaster.gain.value = 0; dMaster.connect(ctx.destination); } }
+function dMidi(){ return (+$('d-oct').value + 1)*12 + +$('d-note').value - 14; }
+const hz = m => 440*Math.pow(2,(m-69)/12);
+function dInfo(){ const m=dMidi(); $('d-info').textContent = D_CONC[((m%12)+12)%12] + ' de concierto · ' + hz(m).toFixed(1).replace('.',',') + ' Hz'; }
+function dVoice(f, level){
+  const out = ctx.createGain(); out.gain.value = level;
+  const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=Math.min(2200,f*6); lp.Q.value=.4;
+  lp.connect(out); out.connect(dMaster);
+  const oscs = [[1,1],[2,.45],[3,.22],[4,.1]].map(([k,g]) => { const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f*k;
+    const og=ctx.createGain(); og.gain.value=g; o.connect(og); og.connect(lp); o.start(); return o; });
+  return {oscs, out};
+}
+function dStop(){ dVoices.forEach(v => { v.oscs.forEach(o => { try{ o.stop(ctx.currentTime+.05); }catch(e){} }); setTimeout(()=>v.out.disconnect(),200); }); dVoices=[]; }
+function dStart(){ dStop(); const f = hz(dMidi()); dVoices.push(dVoice(f,.5)); if ($('d-fifth').checked) dVoices.push(dVoice(f*1.5,.28)); }
+const dVol = () => (+$('d-vol').value/100)*.35;
+$('d-play').addEventListener('click', () => {
+  dOn = !dOn;
+  if (dOn){ dCtx(); dStart(); dMaster.gain.cancelScheduledValues(ctx.currentTime); dMaster.gain.setTargetAtTime(dVol(), ctx.currentTime, .15); }
+  else if (dMaster){ dMaster.gain.cancelScheduledValues(ctx.currentTime); dMaster.gain.setTargetAtTime(0, ctx.currentTime, .08); setTimeout(()=>{ if(!dOn) dStop(); },400); }
+  $('d-play').textContent = dOn ? 'Detener drone' : 'Tocar drone';
+});
+function dRetune(){ dInfo(); if (dOn){ dMaster.gain.setTargetAtTime(0, ctx.currentTime, .03); setTimeout(()=>{ if(dOn){ dStart(); dMaster.gain.setTargetAtTime(dVol(), ctx.currentTime, .1); } },90); } }
+['d-note','d-oct','d-fifth'].forEach(id => $(id).addEventListener('change', dRetune));
+$('d-vol').addEventListener('input', () => { if (dOn) dMaster.gain.setTargetAtTime(dVol(), ctx.currentTime, .05); });
+dInfo();
+
+// Tabla de afinación
+const TT_NOTES = (() => { const n=['Do','Do♯','Re','Mi♭','Mi','Fa','Fa♯','Sol','Sol♯','La','Si♭','Si']; const out=[];
+  for (let m=58; m<=89; m++){ const o = Math.floor(m/12)-1; const reg = o===3||(o===4&&m<62)?'grave':(m<74?'grave':(m<86?'medio':'agudo')); out.push({m, label: n[m%12]+' '+reg}); } return out; })();
+function ttRead(){ try{ return JSON.parse(localStorage.getItem('sax-tuning')||'[]'); }catch(e){ return []; } }
+function ttDraw(){
+  const all = ttRead().sort((a,b)=>a.date.localeCompare(b.date)), prev = all[all.length-1];
+  $('tt-body').innerHTML = TT_NOTES.map(n => {
+    const pv = prev && prev.c[n.m] !== undefined && prev.c[n.m] !== '' ? prev.c[n.m] : '';
+    return `<tr><td>${n.label}</td><td><input type="number" step="1" min="-60" max="60" data-m="${n.m}" style="width:5.5rem" aria-label="Cents ${n.label}"></td><td>${pv===''?'—':(pv>0?'+':'')+pv}</td><td data-d="${n.m}"></td></tr>`;
+  }).join('');
+  $('tt-body').querySelectorAll('input').forEach(inp => inp.addEventListener('input', () => {
+    const m = inp.dataset.m, cell = $('tt-body').querySelector(`[data-d="${m}"]`);
+    const pv = prev && prev.c[m] !== undefined && prev.c[m] !== '' ? +prev.c[m] : null;
+    if (inp.value === '' || pv === null){ cell.textContent=''; return; }
+    const better = Math.abs(+inp.value) < Math.abs(pv), worse = Math.abs(+inp.value) > Math.abs(pv);
+    cell.textContent = better ? 'mejor' : worse ? 'peor' : 'igual';
+    cell.style.color = better ? '#2E7D4F' : worse ? '#B3412E' : '';
+  }));
+  $('tt-msg').textContent = prev ? `Comparando con la semana del ${prev.date}.` : 'Todavía no hay semanas guardadas.';
+}
+$('tt-date').value = new Date().toISOString().slice(0,10);
+$('tt-save').addEventListener('click', () => {
+  const c = {}; let any=false;
+  $('tt-body').querySelectorAll('input').forEach(i => { if (i.value !== ''){ c[i.dataset.m] = +i.value; any=true; } });
+  if (!any){ $('tt-msg').textContent = 'Completá al menos una nota.'; return; }
+  const date = $('tt-date').value || new Date().toISOString().slice(0,10);
+  const all = ttRead().filter(x => x.date !== date); all.push({date, c});
+  try{ localStorage.setItem('sax-tuning', JSON.stringify(all)); ttDraw(); $('tt-msg').textContent = 'Semana guardada. La próxima vez vas a ver la comparación.'; }
+  catch(e){ $('tt-msg').textContent = 'No se pudo guardar en este navegador.'; }
+});
+$('tt-clear').addEventListener('click', () => { $('tt-body').querySelectorAll('input').forEach(i => { i.value=''; i.dispatchEvent(new Event('input')); }); });
+ttDraw();
+
+// Afinador
+(function(){
+  for (let c=-50;c<=50;c+=5){ const t=document.createElement('div'); t.className='tick'; t.style.left=(50+c)+'%'; t.style.height=(c%25===0?'60%':'30%'); $('tu-meter').appendChild(t); }
+  const NN=['Do','Do♯','Re','Mi♭','Mi','Fa','Fa♯','Sol','La♭','La','Si♭','Si'];
+  let stream=null, actx=null, an=null, buf=null, raf=0, hist=[], lastSeen=0;
+  function detect(b, sr){
+    let rms=0; for (let i=0;i<b.length;i++) rms+=b[i]*b[i]; rms=Math.sqrt(rms/b.length);
+    if (rms < (+$('tu-gate').value)/1000) return {f:-1, rms};
+    const minLag=Math.floor(sr/1400), maxLag=Math.floor(sr/50), N=b.length-maxLag;
+    const d=new Float32Array(maxLag+1); let run=0; d[0]=1;
+    for (let lag=1; lag<=maxLag; lag++){
+      let s=0; for (let i=0;i<N;i++){ const x=b[i]-b[i+lag]; s+=x*x; }
+      run+=s; d[lag]= run ? s*lag/run : 1;
+    }
+    let tau=-1;
+    for (let lag=minLag; lag<=maxLag; lag++){ if (d[lag]<0.15){ while(lag+1<=maxLag && d[lag+1]<d[lag]) lag++; tau=lag; break; } }
+    if (tau<0) return {f:-1, rms};
+    const x0=d[tau-1]??d[tau], x2=d[tau+1]??d[tau], den=x0+x2-2*d[tau];
+    const t = den ? tau + (x0-x2)/(2*den) : tau;
+    return {f: sr/t, rms};
+  }
+  function loop(){
+    an.getFloatTimeDomainData(buf);
+    const r=detect(buf, actx.sampleRate), now=performance.now();
+    if (r.f>0){
+      hist.push(r.f); if (hist.length>5) hist.shift();
+      const f=[...hist].sort((a,b)=>a-b)[Math.floor(hist.length/2)];
+      const a4=+$('tu-a4').value, midi=69+12*Math.log2(f/a4), n=Math.round(midi), cents=Math.round((midi-n)*100);
+      const shown=n+ +$('tu-trans').value, name=NN[((shown%12)+12)%12], oct=Math.floor(shown/12)-1;
+      $('tu-note').innerHTML = name + '<small>' + oct + '</small>';
+      const ok=Math.abs(cents)<=5;
+      $('tu-cents').textContent = (cents>0?'+':'') + cents + ' cents' + (ok?' · afinado':(cents>0?' · alto':' · bajo'));
+      $('tu-cents').classList.toggle('ok', ok); $('tu-needle').classList.toggle('ok', ok);
+      $('tu-needle').style.left = (50+Math.max(-50,Math.min(50,cents)))+'%';
+      $('tu-sub').textContent = f.toFixed(1).replace('.',',') + ' Hz' + (+$('tu-trans').value ? ' · suena ' + NN[((n%12)+12)%12] + ' de concierto' : '');
+      lastSeen=now;
+    } else if (now-lastSeen>700){ hist=[]; $('tu-sub').textContent='Tocá una nota larga'; }
+    raf=requestAnimationFrame(loop);
+  }
+  async function start(){
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ $('tu-msg').textContent='Este navegador no da acceso al micrófono.'; return; }
+    try{
+      stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
+    }catch(e){ $('tu-msg').textContent='No se pudo usar el micrófono acá. Revisá que el navegador tenga permiso para el micrófono en los ajustes.'; return; }
+    actx = new (window.AudioContext||window.webkitAudioContext)();
+    const src=actx.createMediaStreamSource(stream);
+    const hp=actx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=45;
+    an=actx.createAnalyser(); an.fftSize=4096; buf=new Float32Array(an.fftSize);
+    src.connect(hp); hp.connect(an);
+    $('tu-start').textContent='Apagar micrófono'; $('tu-msg').textContent=''; loop();
+  }
+  function stop(){ cancelAnimationFrame(raf); if (stream) stream.getTracks().forEach(t=>t.stop()); if (actx) actx.close(); stream=null; actx=null; hist=[];
+    $('tu-start').textContent='Activar micrófono'; $('tu-note').textContent='–'; $('tu-cents').innerHTML='&nbsp;'; $('tu-sub').textContent='Tocá una nota larga'; $('tu-needle').style.left='50%'; }
+  $('tu-start').addEventListener('click', () => stream ? stop() : start());
+})();
+</script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>
