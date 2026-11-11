@@ -88,7 +88,7 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
   <p class="lede">Todo está en altura escrita para tenor. Los ejercicios de embocadura van primero porque son los que más te van a cambiar el grave; las escalas y las tríadas se generan solas, hay secciones de afinación, articulación y bebop, y un drone para tocar encima para cualquier tonalidad, patrón y rango.</p>
 </header>
 <nav aria-label="Secciones"><div>
-  <a href="#rutina">Rutina de 60 min</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
+  <a href="#rutina">Rutina de 60 min</a><a href="#boquilla-sola">Boquilla sola</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
 </div></nav>
 <main>
 <section id="rutina">
@@ -96,7 +96,7 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
   <p>Antes de empezar, calentá dos o tres minutos y chequeá que la boquilla esté en su marca del corcho (está explicado en “Boquilla y afinación”). Una vez por semana, reemplazá el bloque final por la tabla de afinación.</p>
   <p>Mientras dure el cambio a lip-out, el bloque de sonido pesa más que el de técnica. Si en algún momento sentís el labio cansado o empezás a morder, pará dos minutos: tocar con la embocadura vencida refuerza justo lo que querés sacar.</p>
   <ol class="routine">
-    <li><span class="min">0–5</span><span>Boquilla sola y boquilla con tudel. Nota estable y después bajarla un tono con la garganta y la lengua, nunca aflojando la mandíbula.</span></li>
+    <li><span class="min">0–5</span><span>Boquilla sola: Sol estable y “How Low Can You Go”, bajando con la garganta y la lengua, nunca aflojando la mandíbula.</span></li>
     <li><span class="min">5–15</span><span>Notas largas descendentes, de Sol hasta Sib grave, con el drone de fondo en la misma nota que tocás.</span></li>
     <li><span class="min">15–25</span><span>Armónicos sobre las digitaciones graves y el ejercicio de igualar color.</span></li>
     <li><span class="min">25–32</span><span>Octavas ligadas, saltos al grave y ataques suaves.</span></li>
@@ -104,6 +104,29 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
     <li><span class="min">42–52</span><span>Articulación: dos o tres patrones de la escala de Fa, con el drone en Fa para ver si la lengua te mueve la afinación.</span></li>
     <li><span class="min">52–60</span><span>Un tema lento o una balada aplicando el sonido nuevo. Grabate y escuchá al día siguiente.</span></li>
   </ol>
+</section>
+
+<section id="boquilla-sola">
+  <h2>Boquilla sola</h2>
+  <p>Estos ejercicios van <strong>solo con la boquilla</strong>, sin tudel ni saxo, y están escritos en <strong>altura de concierto</strong>: lo que ves es lo que suena. En tenor, la boquilla bien soplada da un Sol de concierto. Esa es la base de todo: si la boquilla sola suena más alta, estás apretando o mordiendo.</p>
+  <p>Agarrá la boquilla firme desde el corcho con los dedos, como un lápiz grueso, así la boca no tiene que sostenerla y los dientes de arriba solo se apoyan.</p>
+  <div class="bar">
+    <button id="bq-drone" type="button">Drone en Sol de concierto</button>
+    <button id="bq-tuner" type="button">Afinador en concierto</button>
+    <span class="how" style="margin:0">Con el drone sabés cuál es el Sol de partida. El afinador en modo concierto te muestra a qué nota llegás al bajar.</span>
+  </div>
+
+  <h3>How Low Can You Go</h3>
+  <p class="how">El ejercicio de tu profesor. Negra = 87. Cada vez arrancás en Sol y bajás a una nota más grave, ligado, y volvés al Sol. Al final sube a La♭, La y Si♭. Para bajar: lengua baja y hacia atrás, garganta abierta en “oh”, aire caliente; la mandíbula y el labio no se mueven. Para subir: lengua arriba como en “iii”, más velocidad de aire, sin morder. Si una nota no llega, quedate trabajando ahí unos días: bajar una octava completa con la boquilla sola es de nivel avanzado.</p>
+  <div class="sheet" id="bq-howlow"></div>
+
+  <h3>Sol estable con dinámica</h3>
+  <p class="how">Crescendo de pianísimo a forte y vuelta, sin que se mueva la afinación. Al tocar fuerte la nota tiende a bajar y al tocar suave tiende a subir: corregilo con la garganta, no con el labio. Hacelo con el drone de fondo.</p>
+  <div class="sheet" id="bq-estable"></div>
+
+  <h3>Ataques sobre la boquilla</h3>
+  <p class="how">Ataques con “du” sobre el Sol, sin que la nota salte arriba al atacar. Con la boquilla sola se nota enseguida si la lengua golpea o si la mandíbula se mueve.</p>
+  <div class="sheet" id="bq-ataques"></div>
 </section>
 
 <section id="embocadura">
@@ -727,6 +750,34 @@ K:F
 };
 
 
+const BOQ = {
+howlow: `X:1
+T:How Low Can You Go (tenor)
+M:4/4
+L:1/4
+Q:1/4=87
+K:C
+"^Sol de concierto"(g4 | g2) z2 || (g2 ^f2 | g3) z | (g2 =f2 | g3) z | (g2 e2 | g3) z |
+(g2 _e2 | g3) z | (g2 d2 | g3) z | (g2 _d2 | g3) z | (g2 c2 | g3) z |
+(g2 B2 | g3) z | (g2 _B2 | g3) z | (g2 A2 | g3) z | (g2 _A2 | g3) z |
+(g2 G2 | g3) z || z4 || "^hacia arriba"(g2 _a2 | g3) z | (g2 =a2 | g3) z | (g2 _b2 | !fermata!g4) |]`,
+estable: `X:1
+T:Sol estable con dinámica
+M:4/4
+L:1/4
+Q:1/4=60
+K:C
+!pp!!<(!g4- | g4!<)! | !f!!>(!g4- | g4!>)!!pp! | z4 | !pp!!<(!g4- | g4!<)! | !f!!>(!g4- | g4!>)!!pp! |]`,
+ataques: `X:1
+T:Ataques sobre la boquilla
+M:4/4
+L:1/4
+Q:1/4=72
+K:C
+"^du"g g g g | g4 | "^du"g g g g | g4 | g/g/g/g/ g/g/g/g/ | g4 | .g .g .g .g | g4 |]`
+};
+
+
 const EX = {
 largas: `X:1
 T:Notas largas descendentes
@@ -779,6 +830,7 @@ K:C
 const ABC_OPTS = { responsive:'resize', add_classes:true, paddingtop:6, paddingbottom:6, foregroundColor:'currentColor' };
 function render(id, abc){ if (window.ABCJS) ABCJS.renderAbc(id, abc, ABC_OPTS); else document.getElementById(id).textContent = 'No se pudo cargar el motor de partituras.'; }
 ['largas','armonicos','espejo','octavas','saltos','ataques'].forEach(k => render('ex-'+k, EX[k]));
+Object.keys(BOQ).forEach(k => render('bq-'+k, BOQ[k]));
 Object.keys(OV).forEach(k => render('ov-'+k, OV[k]));
 Object.keys(BOP).forEach(k => render('bop-'+k, BOP[k]));
 Object.keys(ART).forEach(k => render('art-'+k, ART[k]));
@@ -959,6 +1011,18 @@ $('tt-save').addEventListener('click', () => {
 });
 $('tt-clear').addEventListener('click', () => { $('tt-body').querySelectorAll('input').forEach(i => { i.value=''; i.dispatchEvent(new Event('input')); }); });
 ttDraw();
+
+
+// Atajos de la sección Boquilla sola: Sol de concierto de la boquilla = La agudo escrito
+$('bq-drone').addEventListener('click', () => {
+  $('d-note').value = '9'; $('d-oct').value = '6'; dRetune();
+  if (!dOn) $('d-play').click();
+  $('bq-drone').textContent = 'Drone sonando en Sol';
+});
+$('bq-tuner').addEventListener('click', () => {
+  $('tu-trans').value = '0';
+  document.getElementById('afinador').scrollIntoView({behavior:'smooth'});
+});
 
 // Afinador
 (function(){
