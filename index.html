@@ -370,7 +370,7 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
     <span id="log-msg" role="status"></span>
   </div>
   <div class="log tablewrap"><table><thead><tr><th>Ejercicio</th><th>Patrón</th><th>Mejor tempo</th><th>Fecha</th></tr></thead><tbody id="log-body"></tbody></table></div>
-  <p class="how">El registro queda guardado solo en este navegador.</p>
+  <p class="how">El registro queda guardado solo en este navegador. Si en el celular no escuchás el drone o el metrónomo, subí el volumen multimedia (no el del timbre) y probá de nuevo.</p>
 </section>
 </main>
 <footer>Altura escrita para saxo tenor en Sib. Rango usado: Sib grave a Fa agudo.</footer>
@@ -910,6 +910,26 @@ $('t-next').addEventListener('click', () => { const s=$('t-tonic'); s.selectedIn
   fillTriTonics(s && s.t); drawTriad();
 })();
 
+// Audio en celulares: en iPhone el interruptor de silencio apaga el audio web.
+// Un <audio> silencioso en loop pone la sesión en modo "reproducción" y el drone y el metrónomo suenan igual.
+let silentEl = null;
+function silentWav(){
+  const sr=8000, n=sr/2, b=new Uint8Array(44+n), v=new DataView(b.buffer);
+  const w=(o,s)=>{ for(let i=0;i<s.length;i++) b[o+i]=s.charCodeAt(i); };
+  w(0,'RIFF'); v.setUint32(4,36+n,true); w(8,'WAVE'); w(12,'fmt '); v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+  v.setUint32(24,sr,true); v.setUint32(28,sr,true); v.setUint16(32,1,true); v.setUint16(34,8,true); w(36,'data'); v.setUint32(40,n,true);
+  b.fill(128,44); let s=''; b.forEach(x=>s+=String.fromCharCode(x)); return 'data:audio/wav;base64,'+btoa(s);
+}
+function unlockAudio(){
+  try{ if (navigator.audioSession && !(window.tunerOn)) navigator.audioSession.type = 'playback'; }catch(e){}
+  if (!silentEl){ silentEl = new Audio(silentWav()); silentEl.loop = true; silentEl.setAttribute('playsinline',''); silentEl.preload='auto'; }
+  const p = silentEl.play(); if (p && p.catch) p.catch(()=>{});
+  ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+  if (ctx.state !== 'running') ctx.resume();
+}
+function maybeReleaseAudio(){ if (!timer && !dOn && silentEl) silentEl.pause(); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && ctx && ctx.state !== 'running' && (timer || dOn)) ctx.resume(); });
+
 // Metrónomo
 let ctx=null, timer=null, nextT=0, beat=0;
 function tick(){
@@ -924,8 +944,8 @@ function tick(){
   }
 }
 $('m-toggle').addEventListener('click', () => {
-  if (timer){ clearInterval(timer); timer=null; $('m-toggle').textContent='Iniciar metrónomo'; $('m-beat').classList.remove('on'); return; }
-  ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); ctx.resume();
+  if (timer){ clearInterval(timer); timer=null; $('m-toggle').textContent='Iniciar metrónomo'; $('m-beat').classList.remove('on'); maybeReleaseAudio(); return; }
+  unlockAudio();
   nextT = ctx.currentTime + 0.05; beat = 0; timer = setInterval(tick, 25); $('m-toggle').textContent='Detener metrónomo';
 });
 $('m-bpm').addEventListener('input', e => { $('m-val').textContent = e.target.value; });
@@ -952,7 +972,7 @@ const D_NAMES=[["Do",0],["Do♯",1],["Re",2],["Mi♭",3],["Mi",4],["Fa",5],["Fa�
 const D_CONC=["Do","Re♭","Re","Mi♭","Mi","Fa","Fa♯","Sol","La♭","La","Si♭","Si"];
 $('d-note').innerHTML = D_NAMES.map(([n,p]) => `<option value="${p}">${n}</option>`).join('');
 let dOn=false, dMaster=null, dVoices=[];
-function dCtx(){ ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); if (ctx.state==='suspended') ctx.resume();
+function dCtx(){ unlockAudio();
   if (!dMaster){ dMaster = ctx.createGain(); dMaster.gain.value = 0; dMaster.connect(ctx.destination); } }
 function dMidi(){ return (+$('d-oct').value + 1)*12 + +$('d-note').value - 14; }
 const hz = m => 440*Math.pow(2,(m-69)/12);
@@ -971,7 +991,7 @@ const dVol = () => (+$('d-vol').value/100)*.35;
 $('d-play').addEventListener('click', () => {
   dOn = !dOn;
   if (dOn){ dCtx(); dStart(); dMaster.gain.cancelScheduledValues(ctx.currentTime); dMaster.gain.setTargetAtTime(dVol(), ctx.currentTime, .15); }
-  else if (dMaster){ dMaster.gain.cancelScheduledValues(ctx.currentTime); dMaster.gain.setTargetAtTime(0, ctx.currentTime, .08); setTimeout(()=>{ if(!dOn) dStop(); },400); }
+  else if (dMaster){ dMaster.gain.cancelScheduledValues(ctx.currentTime); dMaster.gain.setTargetAtTime(0, ctx.currentTime, .08); setTimeout(()=>{ if(!dOn){ dStop(); maybeReleaseAudio(); } },400); }
   $('d-play').textContent = dOn ? 'Detener drone' : 'Tocar drone';
 });
 function dRetune(){ dInfo(); if (dOn){ dMaster.gain.setTargetAtTime(0, ctx.currentTime, .03); setTimeout(()=>{ if(dOn){ dStart(); dMaster.gain.setTargetAtTime(dVol(), ctx.currentTime, .1); } },90); } }
@@ -1066,6 +1086,7 @@ $('bq-tuner').addEventListener('click', () => {
   async function start(){
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ $('tu-msg').textContent='Este navegador no da acceso al micrófono.'; return; }
     try{
+      window.tunerOn = true; try{ if (navigator.audioSession) navigator.audioSession.type = 'play-and-record'; }catch(e){}
       stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
     }catch(e){ $('tu-msg').textContent='No se pudo usar el micrófono acá. Revisá que el navegador tenga permiso para el micrófono en los ajustes.'; return; }
     actx = new (window.AudioContext||window.webkitAudioContext)();
@@ -1075,7 +1096,7 @@ $('bq-tuner').addEventListener('click', () => {
     src.connect(hp); hp.connect(an);
     $('tu-start').textContent='Apagar micrófono'; $('tu-msg').textContent=''; loop();
   }
-  function stop(){ cancelAnimationFrame(raf); if (stream) stream.getTracks().forEach(t=>t.stop()); if (actx) actx.close(); stream=null; actx=null; hist=[];
+  function stop(){ cancelAnimationFrame(raf); if (stream) stream.getTracks().forEach(t=>t.stop()); if (actx) actx.close(); stream=null; actx=null; hist=[]; window.tunerOn=false; try{ if (navigator.audioSession) navigator.audioSession.type = 'playback'; }catch(e){}
     $('tu-start').textContent='Activar micrófono'; $('tu-note').textContent='–'; $('tu-cents').innerHTML='&nbsp;'; $('tu-sub').textContent='Tocá una nota larga'; $('tu-needle').style.left='50%'; }
   $('tu-start').addEventListener('click', () => stream ? stop() : start());
 })();
