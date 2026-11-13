@@ -77,6 +77,24 @@ button.primary{ background:var(--brass); color:var(--paper); border-color:var(--
 .t-cents{ text-align:center; font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums; }
 .t-cents.ok{ color:#2E7D4F; }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .t-needle.ok, :root:not([data-theme="light"]) .t-cents.ok{ color:#6FCF97; background-color:initial; } }
+.cof-wrap{ display:grid; grid-template-columns:minmax(0,380px) minmax(0,1fr); gap:1.5rem; align-items:start; margin:1rem 0; }
+@media (max-width:720px){ .cof-wrap{ grid-template-columns:minmax(0,1fr); } }
+#cof-svg{ width:100%; height:auto; display:block; max-width:380px; margin:0 auto; }
+#cof-svg .seg{ cursor:pointer; outline:none; }
+#cof-svg .seg path{ fill:var(--card); stroke:var(--rule); stroke-width:1; }
+#cof-svg .seg.sel path{ fill:color-mix(in srgb, var(--brass) 30%, var(--card)); stroke:var(--brass); stroke-width:2; }
+#cof-svg .seg:focus-visible path{ stroke:var(--brass); stroke-width:3; }
+#cof-svg text{ fill:var(--ink); text-anchor:middle; dominant-baseline:central; font-family:inherit; pointer-events:none; }
+#cof-svg .maj{ font-weight:800; font-size:17px; }
+#cof-svg .maj.two{ font-size:12px; }
+#cof-svg .cnt{ font-size:12.5px; fill:var(--brass); font-weight:600; }
+#cof-svg .mnr{ font-size:10.5px; fill:var(--steel); }
+#cof-svg .ctr{ font-size:11.5px; fill:var(--steel); font-style:italic; }
+#cof-svg circle.ring{ fill:none; stroke:var(--rule); stroke-width:1; pointer-events:none; }
+.chips{ margin:.2rem 0 .8rem; }
+.chips span{ display:inline-block; padding:.12rem .55rem; border:1px solid var(--rule); border-radius:999px; margin:.15rem .25rem .15rem 0; color:var(--steel); font-variant-numeric:tabular-nums; }
+.chips span.on{ background:var(--brass); color:var(--paper); border-color:var(--brass); font-weight:600; }
+#cof-title{ margin-top:0; }
 footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--steel); font-size:.9rem; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none!important; } }
 </style>
@@ -88,7 +106,7 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
   <p class="lede">Todo está en altura escrita para tenor. Los ejercicios de embocadura van primero porque son los que más te van a cambiar el grave; las escalas y las tríadas se generan solas, hay secciones de afinación, articulación y bebop, y un drone para tocar encima para cualquier tonalidad, patrón y rango.</p>
 </header>
 <nav aria-label="Secciones"><div>
-  <a href="#rutina">Rutina de 60 min</a><a href="#boquilla-sola">Boquilla sola</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
+  <a href="#rutina">Rutina de 60 min</a><a href="#boquilla-sola">Boquilla sola</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#circulo">Círculo de quintas</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
 </div></nav>
 <main>
 <section id="rutina">
@@ -241,6 +259,47 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
   <p class="how"><strong>Compases 12 a 14:</strong> grupos de 3 y 2, así que la lengua cae fuera del tiempo y aparecen acentos desplazados. Contá en voz alta o con el metrónomo marcando solo 2 y 4.</p>
   <p class="how"><strong>Compases 4 a 10:</strong> la nota que sigue a un staccato no tiene que salir con golpe. El staccato lo corta la lengua; el aire empuja igual.</p>
   <p class="how">Arrancá en esta octava, donde la embocadura nueva está más firme, y cuando salgan limpios llevalos una octava abajo, bajando la escala y a otras tonalidades. Las cuatro líneas vacías de la hoja original son para inventar tus propios patrones.</p>
+</section>
+
+<section id="circulo">
+  <h2>Armaduras y círculo de quintas</h2>
+  <p>Los sostenidos y los bemoles de una armadura no aparecen al azar: siempre se agregan en el mismo orden, y ese orden sale de moverse por quintas. El círculo junta las doce tonalidades según cuántas alteraciones tienen.</p>
+
+  <h3>Orden de aparición de los sostenidos</h3>
+  <div class="chips" id="cof-sharps" aria-label="Orden de los sostenidos"></div>
+  <p class="how">Cada uno está una quinta arriba del anterior. Una tonalidad con tres sostenidos tiene siempre los tres primeros de la lista, nunca otros.</p>
+
+  <h3>Orden de aparición de los bemoles</h3>
+  <div class="chips" id="cof-flats" aria-label="Orden de los bemoles"></div>
+  <p class="how">Es la lista de los sostenidos leída al revés. Cada bemol está una cuarta arriba del anterior.</p>
+
+  <h3>El círculo</h3>
+  <p class="how">Tocá una tonalidad. Hacia la derecha subís por quintas y se agrega un sostenido en cada paso; hacia la izquierda subís por cuartas y se agrega un bemol. Abajo el círculo se cierra, porque Fa♯ y Sol♭ son la misma nota con dos nombres.</p>
+  <div class="cof-wrap">
+    <svg id="cof-svg" viewBox="0 0 360 360" role="group" aria-label="Círculo de quintas"></svg>
+    <div>
+      <h3 id="cof-title"></h3>
+      <div class="bar" id="cof-spell"></div>
+      <p id="cof-desc"></p>
+      <div class="sheet" id="cof-staff"></div>
+      <p class="how" id="cof-tenor"></p>
+      <div class="bar"><button id="cof-open" type="button">Practicar esta escala</button></div>
+    </div>
+  </div>
+
+  <h3>Cómo leer una armadura</h3>
+  <ol class="routine">
+    <li><span class="min">Con ♯</span><span>La tonalidad está medio tono arriba del último sostenido. Fa♯, Do♯ y Sol♯: el último es Sol♯, así que es La mayor.</span></li>
+    <li><span class="min">Con ♭</span><span>La tonalidad es el anteúltimo bemol. Si♭, Mi♭ y La♭: el anteúltimo es Mi♭, así que es Mi♭ mayor. Un solo bemol es Fa mayor.</span></li>
+    <li><span class="min">Menor</span><span>Cada tonalidad mayor comparte armadura con su relativa menor, una tercera menor abajo: La menor con Do, Mi menor con Sol, Re menor con Fa. En el círculo están en el anillo de adentro.</span></li>
+  </ol>
+
+  <h3>Para qué sirve en el saxo</h3>
+  <ol class="routine">
+    <li><span class="min">Escalas</span><span>Recorriendo el círculo, cada escala nueva cambia una sola nota respecto de la anterior. Es lo que hace el botón “Siguiente por quintas”.</span></li>
+    <li><span class="min">Jazz</span><span>Los acordes se mueven casi siempre por cuartas, hacia la izquierda del círculo. El ii-V-I es eso: Re, Sol, Do. El “Ciclo de cuartas” de la sección de tríadas lo recorre en ese sentido.</span></li>
+    <li><span class="min">Transporte</span><span>El tenor lee un tono arriba de lo que suena, que son dos pasos a la derecha en el círculo. Un tema en Si♭ de concierto lo leés en Do; uno en Fa de concierto, en Sol.</span></li>
+  </ol>
 </section>
 
 <section id="escalas">
@@ -908,6 +967,62 @@ $('t-next').addEventListener('click', () => { const s=$('t-tonic'); s.selectedIn
   let s=null; try{ s = JSON.parse(localStorage.getItem('sax-tri')||'null'); }catch(e){}
   if (s){ $('t-ex').value=s.ex; $('t-qual').value=s.q; }
   fillTriTonics(s && s.t); drawTriad();
+})();
+
+// Círculo de quintas
+(function(){
+  const SH=['Fa♯','Do♯','Sol♯','Re♯','La♯','Mi♯','Si♯'], FL=['Si♭','Mi♭','La♭','Re♭','Sol♭','Do♭','Fa♭'];
+  const COF=[
+    [{t:'C',n:'Do',a:0,m:'La'}],[{t:'G',n:'Sol',a:1,m:'Mi'}],[{t:'D',n:'Re',a:2,m:'Si'}],[{t:'A',n:'La',a:3,m:'Fa♯'}],[{t:'E',n:'Mi',a:4,m:'Do♯'}],
+    [{t:'B',n:'Si',a:5,m:'Sol♯'},{t:'Cb',n:'Do♭',a:-7,m:'La♭'}],
+    [{t:'F#',n:'Fa♯',a:6,m:'Re♯'},{t:'Gb',n:'Sol♭',a:-6,m:'Mi♭'}],
+    [{t:'Db',n:'Re♭',a:-5,m:'Si♭'},{t:'C#',n:'Do♯',a:7,m:'La♯'}],
+    [{t:'Ab',n:'La♭',a:-4,m:'Fa'}],[{t:'Eb',n:'Mi♭',a:-3,m:'Do'}],[{t:'Bb',n:'Si♭',a:-2,m:'Sol'}],[{t:'F',n:'Fa',a:-1,m:'Re'}]
+  ];
+  const CONC=['Do','Sol','Re','La','Mi','Si','Fa♯ (o Sol♭)','Re♭','La♭','Mi♭','Si♭','Fa'];
+  const NUM=['','un','dos','tres','cuatro','cinco','seis','siete'];
+  const cnt = a => a===0 ? '0' : Math.abs(a)+(a>0?'♯':'♭');
+  const svg=$('cof-svg'), NS='http://www.w3.org/2000/svg', C=180;
+  const pt=(r,deg)=>{ const x=deg*Math.PI/180; return [C+r*Math.cos(x), C+r*Math.sin(x)]; };
+  const el=(n,at,txt)=>{ const e=document.createElementNS(NS,n); for(const k in at) e.setAttribute(k,at[k]); if(txt!==undefined) e.textContent=txt; return e; };
+  let pos=0, sp=0;
+  COF.forEach((keys,i)=>{
+    const mid=-90+i*30, a0=mid-15, a1=mid+15, R=172, r=50;
+    const [x0,y0]=pt(R,a0),[x1,y1]=pt(R,a1),[x2,y2]=pt(r,a1),[x3,y3]=pt(r,a0);
+    const g=el('g',{class:'seg',tabindex:'0',role:'button','data-i':i,'aria-label':keys.map(k=>k.n+' mayor, '+(k.a===0?'sin alteraciones':Math.abs(k.a)+(k.a>0?' sostenidos':' bemoles'))).join(' o ')});
+    g.appendChild(el('path',{d:`M${x0},${y0} A${R},${R} 0 0 1 ${x1},${y1} L${x2},${y2} A${r},${r} 0 0 0 ${x3},${y3} Z`}));
+    const [mx,my]=pt(146,mid),[cx,cy]=pt(111,mid),[nx,ny]=pt(75,mid);
+    if (keys.length===1){ g.appendChild(el('text',{class:'maj',x:mx,y:my},keys[0].n)); g.appendChild(el('text',{class:'cnt',x:cx,y:cy},cnt(keys[0].a))); }
+    else { g.appendChild(el('text',{class:'maj two',x:mx,y:my-7},keys[0].n)); g.appendChild(el('text',{class:'maj two',x:mx,y:my+7},keys[1].n));
+           g.appendChild(el('text',{class:'cnt',x:cx,y:cy},cnt(keys[0].a)+' / '+cnt(keys[1].a))); }
+    g.appendChild(el('text',{class:'mnr',x:nx,y:ny},keys[0].m+' m'));
+    const pick=()=>{ pos=i; sp=0; show(); };
+    g.addEventListener('click',pick);
+    g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+    svg.appendChild(g);
+  });
+  [128,93].forEach(r=>svg.appendChild(el('circle',{class:'ring',cx:C,cy:C,r})));
+  svg.appendChild(el('text',{class:'ctr',x:C,y:C-9},'quintas ↻'));
+  svg.appendChild(el('text',{class:'ctr',x:C,y:C+9},'↺ cuartas'));
+  function show(){
+    const keys=COF[pos], k=keys[sp], n=Math.abs(k.a);
+    svg.querySelectorAll('.seg').forEach(g=>g.classList.toggle('sel', +g.dataset.i===pos));
+    $('cof-title').textContent = k.n+' mayor';
+    $('cof-spell').innerHTML = keys.length>1 ? keys.map((x,j)=>`<button type="button" data-j="${j}" ${j===sp?'class="primary"':''}>${x.n} (${cnt(x.a)})</button>`).join('') + '<span class="how" style="margin:0">Suenan igual, se escriben distinto.</span>' : '';
+    const list=(k.a>0?SH:FL).slice(0,n);
+    $('cof-desc').textContent = (k.a===0 ? 'No tiene sostenidos ni bemoles.'
+      : `Tiene ${NUM[n]} ${k.a>0?(n>1?'sostenidos':'sostenido'):(n>1?'bemoles':'bemol')}: ${list.join(', ')}. `
+        + (n===1 ? `Es la ${k.a>0?'séptima':'cuarta'} nota de la escala.` : `El último, ${list[n-1]}, es la ${k.a>0?'séptima':'cuarta'} nota de la escala.`))
+      + ` Su relativa menor es ${k.m} menor.`;
+    render('cof-staff', toAbc({tonic:k.t, mode:'mayor', pattern:'escala', range:'1oct', title:'Escala de '+k.n+' mayor', barsPerLine:2}));
+    $('cof-tenor').textContent = `Si leés en ${k.n} mayor, en concierto suena ${CONC[(pos+10)%12]} mayor.`;
+    $('cof-sharps').innerHTML = SH.map((s,j)=>`<span class="${k.a>0&&j<n?'on':''}">${j+1}. ${s}</span>`).join('');
+    $('cof-flats').innerHTML = FL.map((s,j)=>`<span class="${k.a<0&&j<n?'on':''}">${j+1}. ${s}</span>`).join('');
+    $('cof-open').hidden = !TON.major.includes(k.t);
+  }
+  $('cof-spell').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; sp=+b.dataset.j; show(); });
+  $('cof-open').addEventListener('click', ()=>{ const k=COF[pos][sp]; $('s-mode').value='mayor'; fillTonics(k.t); drawScale(); document.getElementById('escalas').scrollIntoView({behavior:'smooth'}); });
+  show();
 })();
 
 // Audio en celulares: en iPhone el interruptor de silencio apaga el audio web.
