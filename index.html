@@ -95,6 +95,19 @@ button.primary{ background:var(--brass); color:var(--paper); border-color:var(--
 .chips span{ display:inline-block; padding:.12rem .55rem; border:1px solid var(--rule); border-radius:999px; margin:.15rem .25rem .15rem 0; color:var(--steel); font-variant-numeric:tabular-nums; }
 .chips span.on{ background:var(--brass); color:var(--paper); border-color:var(--brass); font-weight:600; }
 #cof-title{ margin-top:0; }
+.gr table{ border-collapse:collapse; margin:0 auto; }
+.gr th{ padding:.35rem .3rem; font-weight:800; text-align:center; font-variant-numeric:tabular-nums; }
+.gr td{ border:1px solid var(--rule); padding:0; text-align:center; position:relative; }
+.gr td input{ width:3.6rem; border:0; border-radius:0; background:transparent; text-align:center; padding:.6rem .1rem .75rem; font-size:1rem; }
+.gr td input:focus-visible{ outline:2px solid var(--brass); outline-offset:-2px; }
+.gr td .mk{ position:absolute; right:2px; bottom:0; font-size:.7rem; line-height:1.2; pointer-events:none; }
+.gr td.ok{ background:color-mix(in srgb, #2E7D4F 16%, transparent); } .gr td.ok .mk{ color:#2E7D4F; }
+.gr td.enh{ background:color-mix(in srgb, var(--brass) 24%, transparent); } .gr td.enh .mk{ color:var(--brass); }
+.gr td.bad{ background:color-mix(in srgb, #B3412E 18%, transparent); } .gr td.bad .mk{ color:#B3412E; }
+.gr tbody th, .gr thead th:first-child{ position:sticky; left:0; background:var(--paper); z-index:1; padding:.35rem .5rem .35rem .1rem; }
+@media (max-width:480px){ .gr td input{ width:2.45rem; font-size:.9rem; padding:.6rem 0 .75rem; } .gr th{ font-size:.9rem; } .gr tbody th, .gr thead th:first-child{ padding-right:.3rem; } }
+.gr-sum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.25rem 1.5rem; margin:.75rem 0; }
+.gr-sum strong{ font-variant-numeric:tabular-nums; }
 footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--steel); font-size:.9rem; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none!important; } }
 </style>
@@ -106,7 +119,7 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
   <p class="lede">Todo está en altura escrita para tenor. Los ejercicios de embocadura van primero porque son los que más te van a cambiar el grave; las escalas y las tríadas se generan solas, hay secciones de afinación, articulación y bebop, y un drone para tocar encima para cualquier tonalidad, patrón y rango.</p>
 </header>
 <nav aria-label="Secciones"><div>
-  <a href="#rutina">Rutina de 60 min</a><a href="#boquilla-sola">Boquilla sola</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#circulo">Círculo de quintas</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
+  <a href="#rutina">Rutina de 60 min</a><a href="#boquilla-sola">Boquilla sola</a><a href="#embocadura">Embocadura y graves</a><a href="#boquilla">Boquilla y afinación</a><a href="#overtones">Overtones</a><a href="#articulacion">Articulación</a><a href="#circulo">Círculo de quintas</a><a href="#grados">Grados</a><a href="#escalas">Escalas</a><a href="#triadas">Tríadas</a><a href="#bebop">Bebop</a><a href="#afinador">Afinador</a><a href="#metronomo">Drone, metrónomo y registro</a>
 </div></nav>
 <main>
 <section id="rutina">
@@ -300,6 +313,29 @@ footer{ max-width:880px; margin:0 auto; padding:1rem 1.25rem 3rem; color:var(--s
     <li><span class="min">Jazz</span><span>Los acordes se mueven casi siempre por cuartas, hacia la izquierda del círculo. El ii-V-I es eso: Re, Sol, Do. El “Ciclo de cuartas” de la sección de tríadas lo recorre en ese sentido.</span></li>
     <li><span class="min">Transporte</span><span>El tenor lee un tono arriba de lo que suena, que son dos pasos a la derecha en el círculo. Un tema en Si♭ de concierto lo leés en Do; uno en Fa de concierto, en Sol.</span></li>
   </ol>
+</section>
+
+<section id="grados">
+  <h2>Grados por tonalidad</h2>
+  <p>La planilla de tu profesor: para cada tonalidad, en orden de cuartas, escribís qué nota es cada grado. La idea es llegar a decirlas de memoria y a tempo, sin contar con los dedos.</p>
+  <p class="how">Podés escribir con cifrado (C, Bb, F#) o con nombres (Do, Sib, Fa#). El nombre de la nota cuenta: la ♭9 de Do es Re♭, no Do♯. Si la nota suena igual pero está mal escrita, se marca como error enarmónico. Los dobles bemoles se escriben con dos b, por ejemplo Bbb o Sibb.</p>
+  <div class="bar">
+    <label style="flex-direction:row;align-items:center;gap:.5rem">♩ = <input type="number" id="gr-bpm" min="30" max="240" inputmode="numeric" style="width:5rem" aria-label="Tempo de la planilla"></label>
+    <button id="gr-metro" type="button">Usar en el metrónomo</button>
+  </div>
+  <div class="tablewrap gr"><table aria-label="Grados por tonalidad"><thead id="gr-head"></thead><tbody id="gr-body"></tbody></table></div>
+  <div class="bar">
+    <button id="gr-check" class="primary" type="button">Corregir</button>
+    <button id="gr-clear" type="button">Borrar todo</button>
+    <span class="how" style="margin:0">✓ correcta · ≈ error enarmónico · ✗ incorrecta</span>
+  </div>
+  <div class="gr-sum" role="status">
+    <div>Incorrectas: <strong id="gr-bad">–</strong></div>
+    <div>Errores enarmónicos: <strong id="gr-enh">–</strong></div>
+    <div>Sin completar: <strong id="gr-empty">–</strong></div>
+    <div>Repasar tonalidades: <strong id="gr-rev">–</strong></div>
+  </div>
+  <p class="how">Lo que escribís queda guardado en este dispositivo. Corregí recién cuando termines la planilla: el ejercicio es pensarlas, no adivinarlas.</p>
 </section>
 
 <section id="escalas">
@@ -1023,6 +1059,62 @@ $('t-next').addEventListener('click', () => { const s=$('t-tonic'); s.selectedIn
   $('cof-spell').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; sp=+b.dataset.j; show(); });
   $('cof-open').addEventListener('click', ()=>{ const k=COF[pos][sp]; $('s-mode').value='mayor'; fillTonics(k.t); drawScale(); document.getElementById('escalas').scrollIntoView({behavior:'smooth'}); });
   show();
+})();
+
+// Grados por tonalidad
+(function(){
+  const ROOTS=['C','F','Bb','Eb','Ab','Db','Gb','B','E','A','D','G'];
+  const DEG=[['3',2,4],['7',6,11],['b9',1,1],['b3',2,3],['b7',6,10],['5',4,7],['9',1,2],['#11',3,6]]; // nombre, letras arriba, semitonos
+  const LET='CDEFGAB', NATS=[0,2,4,5,7,9,11], ES={do:0,re:1,mi:2,fa:3,sol:4,la:5,si:6};
+  function parse(s){
+    s=s.trim().toLowerCase().replace(/♭/g,'b').replace(/♯/g,'#').replace(/𝄫/g,'bb').replace(/𝄪/g,'##').replace(/\s+/g,'');
+    let m=s.match(/^(do|re|mi|fa|sol|la|si)(b{0,2}|#{1,2}|x)$/), L;
+    if (m) L=ES[m[1]]; else { m=s.match(/^([a-g])(b{0,2}|#{1,2}|x)$/); if(!m) return null; L=LET.indexOf(m[1].toUpperCase()); }
+    const a=m[2]; return {L, alt: a==='x'?2 : a[0]==='#'?a.length : -a.length};
+  }
+  function answer(root,d){
+    const r=parse(root), L=(r.L+d[1])%7, pc=(NATS[r.L]+r.alt+d[2])%12;
+    let alt=pc-NATS[L]; while(alt>6) alt-=12; while(alt<-6) alt+=12;
+    return {L,alt,pc};
+  }
+  const pcOf=n=>(((NATS[n.L]+n.alt)%12)+12)%12;
+  let saved={}; try{ saved=JSON.parse(localStorage.getItem('sax-grados')||'{}'); }catch(e){}
+  const store=()=>{ try{ localStorage.setItem('sax-grados', JSON.stringify(saved)); }catch(e){} };
+  $('gr-head').innerHTML='<tr><th></th>'+DEG.map(d=>`<th scope="col">${d[0].replace('b','♭').replace('#','♯')}</th>`).join('')+'</tr>';
+  $('gr-body').innerHTML=ROOTS.map((r,i)=>`<tr><th scope="row">${r.replace(/b$/,'♭')}</th>`+DEG.map((d,j)=>
+    `<td><input type="text" data-k="${i}-${j}" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="6" aria-label="${d[0]} de ${r}"><span class="mk" aria-hidden="true"></span></td>`).join('')+'</tr>').join('');
+  const inputs=[...$('gr-body').querySelectorAll('input')];
+  inputs.forEach(inp=>{
+    if (saved[inp.dataset.k]) inp.value=saved[inp.dataset.k];
+    inp.addEventListener('input',()=>{ const k=inp.dataset.k; if(inp.value.trim()) saved[k]=inp.value; else delete saved[k]; store();
+      const td=inp.parentElement; td.className=''; td.querySelector('.mk').textContent=''; });
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); const n=inputs[inputs.indexOf(inp)+1]; if(n) n.focus(); } });
+  });
+  if (saved.bpm) $('gr-bpm').value=saved.bpm;
+  $('gr-bpm').addEventListener('input',()=>{ saved.bpm=$('gr-bpm').value; store(); });
+  $('gr-metro').addEventListener('click',()=>{ const v=+$('gr-bpm').value; if(!v) return; $('m-bpm').value=Math.max(40,Math.min(220,v)); $('m-val').textContent=$('m-bpm').value;
+    document.getElementById('metronomo').scrollIntoView({behavior:'smooth'}); });
+  $('gr-check').addEventListener('click',()=>{
+    let bad=0, enh=0, empty=0; const rev=new Set();
+    inputs.forEach(inp=>{
+      const [i,j]=inp.dataset.k.split('-').map(Number), td=inp.parentElement, mk=td.querySelector('.mk');
+      td.className=''; mk.textContent='';
+      if(!inp.value.trim()){ empty++; return; }
+      const got=parse(inp.value), want=answer(ROOTS[i],DEG[j]);
+      if (got && got.L===want.L && got.alt===want.alt){ td.className='ok'; mk.textContent='✓'; }
+      else if (got && pcOf(got)===want.pc){ td.className='enh'; mk.textContent='≈'; enh++; rev.add(ROOTS[i]); }
+      else { td.className='bad'; mk.textContent='✗'; bad++; rev.add(ROOTS[i]); }
+    });
+    $('gr-bad').textContent=bad; $('gr-enh').textContent=enh; $('gr-empty').textContent=empty;
+    $('gr-rev').textContent = rev.size ? [...rev].map(r=>r.replace(/b$/,'♭')).join(', ') : (empty===inputs.length ? '–' : 'ninguna');
+  });
+  let armed=0;
+  $('gr-clear').addEventListener('click',()=>{
+    if (Date.now()-armed>4000){ armed=Date.now(); $('gr-clear').textContent='Tocá de nuevo para borrar'; setTimeout(()=>{ $('gr-clear').textContent='Borrar todo'; },4000); return; }
+    armed=0; const bpm=saved.bpm; saved=bpm?{bpm}:{}; store();
+    inputs.forEach(inp=>{ inp.value=''; inp.parentElement.className=''; inp.parentElement.querySelector('.mk').textContent=''; });
+    ['gr-bad','gr-enh','gr-empty','gr-rev'].forEach(id=>$(id).textContent='–'); $('gr-clear').textContent='Borrar todo';
+  });
 })();
 
 // Audio en celulares: en iPhone el interruptor de silencio apaga el audio web.
